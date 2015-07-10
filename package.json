@@ -1,6 +1,7 @@
 {
   "name": "D3licious",
   "version": "0.0.0",
+  "description": "Me learning D3 etc.",
   "author": "Kjetil Midtgarden Golid <kjetil.golid@gmail.com>",
   "scripts": {
     "build": "browserify js/app.js -o static/bundle.js"
