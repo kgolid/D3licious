@@ -4,5 +4,9 @@
   "author": "Kjetil Midtgarden Golid <kjetil.golid@gmail.com>",
   "dependencies": {
     "d3": "^3.5.6"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.6",
+    "watchify": "^3.2.3"
   }
 }
