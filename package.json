@@ -1,0 +1,8 @@
+{
+  "name": "D3licious",
+  "version": "0.0.0",
+  "author": "Kjetil Midtgarden Golid <kjetil.golid@gmail.com>",
+  "dependencies": {
+    "d3": "^3.5.6"
+  }
+}
