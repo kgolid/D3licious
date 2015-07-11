@@ -1,3 +1,3 @@
-var d3 = require('d3');
+var lesson1 = require('./lesson1.js');
 
-console.log("hello world!");
+lesson1.figure;
