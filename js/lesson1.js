@@ -1,7 +1,7 @@
 var d3 = require('d3');
 
 var dataSet = [];
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < 20; i++) {
   dataSet[i] = Math.random()*300;
 }
 
