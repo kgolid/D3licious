@@ -12,3 +12,16 @@ h2 { margin:25px; }
 .l2 .bubble { fill:#222; }
 
 /* Lesson 03 */
+
+/* Lesson 04 */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
