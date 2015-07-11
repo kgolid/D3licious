@@ -1,0 +1,7 @@
+* { margin:0; padding:0; }
+body { background-color:#333; font-family:sans-serif; color:#fff; }
+h1 { margin:25px; letter-spacing: .1em; }
+
+.lesson { background-color:#555; margin:25px; padding:15px; }
+
+.bar { display:inline-block; background-color: #222; width:25px; margin:3px; vertical-align:bottom;}
