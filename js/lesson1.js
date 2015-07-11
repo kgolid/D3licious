@@ -5,9 +5,7 @@ for (var i = 0; i < 50; i++) {
   dataSet[i] = Math.random()*300;
 }
 
-module.exports.figure = d3.select('body')
-  .append('div')
-  .attr('class','lesson l1')
+d3.select('.l1')
   .selectAll('div')
   .data(dataSet)
   .enter()
