@@ -2,10 +2,12 @@ var d3 = require('d3');
 
 var dataSet = [];
 var size = 30;
-var containerHeight = 300;
+
 for (var i = 0; i < size; i++) {
   dataSet[i] = Math.random()*20 + 5;
 }
+
+var containerHeight = 300;
 
 var calculateX = function (d, i) {
   var percentage = (i / size) * 100;
