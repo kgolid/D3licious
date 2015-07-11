@@ -1,3 +1,2 @@
 var lesson1 = require('./lesson1.js');
-
-lesson1.figure;
+var lesson2 = require('./lesson2.js');
