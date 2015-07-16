@@ -1,8 +1,8 @@
 # D3licious
-Me learning D3 from Scott Murray's http://alignedleft.com/tutorials/d3/
+Me learning D3.
 
 ##Currently 2 Chapters:
-- **Chapter 1:** Scott Murray's Tutorial.
+- **Chapter 1:** Scott Murray's Tutorial, http://alignedleft.com/tutorials/d3/.
   - **Lesson 1.1:** Stretch divs according to dataset.
   - **Lesson 1.2:** Start using SVG elements.
   - **Lesson 1.3:** Revisit first lesson, add labels and data dependent fill.
