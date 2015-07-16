@@ -1,8 +1,8 @@
 var d3 = require('d3');
 
 var dataSet = [];
-for (var i = 0; i < 20; i++) {
-  dataSet[i] = Math.random()*300;
+for (var i = 0; i < 30; i++) {
+  dataSet[i] = Math.random()*250 + 50;
 }
 
 d3.select('.l1')

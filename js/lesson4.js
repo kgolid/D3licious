@@ -10,7 +10,7 @@ for (var i = 0; i < size; i++) {
 
 // ----- VISUALIZATION -----
 
-var w = 930;
+var w = 900;
 var h = 500;
 var padding = 25;
 
@@ -62,7 +62,7 @@ svg.selectAll('circle')
    .attr('r', function (d) {
      return ( Math.sqrt( (d[0] * d[0]) + (d[1] * d[1]) ) );
    })
-   .attr('fill', '#222')
+   .attr('class', 'bubble')
    .attr('opacity', function (d) {
      return ( d[0] / 40 + 0.5 );
    })

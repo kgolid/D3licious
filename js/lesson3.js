@@ -24,9 +24,9 @@ var calculateHeight = function (d) {
   return d*10;
 }
 
-var calculateFill = function (d) {
-  var val = Math.round(80 - d * 2);
-  return "rgb("+ val + ", " + val + ", "+ val + ")";
+var calculateOpacity = function (d) {
+  var val = d / 25;
+  return val;
   ;
 }
 
@@ -43,7 +43,8 @@ var rects = svg.selectAll('rect')
    .attr('y', calculateY)
    .attr('width', width + '%')
    .attr('height', calculateHeight)
-   .attr('fill', calculateFill);
+   .attr('opacity', calculateOpacity)
+   .attr('class', 'bar');
 
 svg.selectAll('text')
    .data(dataSet)
@@ -58,5 +59,5 @@ svg.selectAll('text')
    .attr('y', function (d) {
      return containerHeight - calculateHeight(d) + 20;
    })
-   .attr('fill', '#aaa')
+   .attr('fill', '#fff')
    .attr("text-anchor", "middle");

@@ -1,13 +1,12 @@
 var d3 = require('d3');
 
-var w = 930,
-    h = 500;
+var w = 900,
+    h = 700;
 
 var svg = d3.select('.l5').append('svg').attr('width', w).attr('height', h);
 
 var size = 20,
-    r = 10,
-    fill = '#222';
+    r = 15;
 
 var getRandomParticle = function () {
   var posx = Math.random() * w;
@@ -15,8 +14,9 @@ var getRandomParticle = function () {
   var dir = Math.random() * (2*Math.PI);
   var velx = Math.cos(dir);
   var vely = Math.sin(dir);
+  var fill = Math.random() * 360;
 
-  return {'pos':{'x':posx, 'y':posy}, 'vel':{'x':velx, 'y':vely}};
+  return {'pos':{'x':posx, 'y':posy}, 'vel':{'x':velx, 'y':vely}, 'fill':fill};
 }
 
 var particles = []
@@ -39,15 +39,17 @@ var circles = svg.selectAll('circle')
      return p.pos.y
    })
    .attr('r', r)
-   .attr('fill', fill);
+   .attr('fill', function (p) {
+     return d3.hsl(Math.round(p.fill), 1, .7 );
+   });
 
 var animate = function (elapsed) {
   circles
   .attr('cx', function (p) {
-    return my_mod((p.pos.x + p.vel.x * .1 * elapsed), w);
+    return my_mod((p.pos.x + p.vel.x * .08 * elapsed), w);
   })
   .attr('cy', function (p) {
-    return my_mod((p.pos.y + p.vel.y * .1 * elapsed), h);
+    return my_mod((p.pos.y + p.vel.y * .08 * elapsed), h);
   });
 }
 
