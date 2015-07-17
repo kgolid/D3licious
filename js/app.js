@@ -53,7 +53,11 @@ var loadChapter = function (chap) {
 }
 
 var prepareMainPage = function () {
+  // Reset header
+  leftHead.onclick = null;
   rightHead.innerText = "";
+
+  // Remove chapter container
   main.removeChild(document.querySelector('.chapter'));
 }
 
