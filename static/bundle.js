@@ -225,7 +225,8 @@ var circles = svg.selectAll('circle')
    .attr('r', r)
    .attr('fill', function (p) {
      return d3.hsl(Math.round(p.fill), 1, .7 );
-   });
+   })
+   .attr('class', 'bubble');
 
 var animate = function (elapsed) {
   circles
