@@ -1,7 +1,7 @@
-# D3licious
-Me learning D3.
+#D3licious
+Me learning D3, svg, npm and git.  Link: http://golid.net/D3licious
 
-##Currently 2 Chapters:
+##Overview:
 - **Chapter 1:** Scott Murray's Tutorial, http://alignedleft.com/tutorials/d3/.
   - **Lesson 1.1:** Stretch divs according to dataset.
   - **Lesson 1.2:** Start using SVG elements.
