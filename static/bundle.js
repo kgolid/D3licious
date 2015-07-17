@@ -5,240 +5,329 @@ var lesson3 = require('./lesson3.js');
 var lesson4 = require('./lesson4.js');
 var lesson5 = require('./lesson5.js');
 
+var chapters = [
+  {id: 1, name: "Scott's tutorial", figures: 4},
+  {id: 2, name: "Perpetual motion", figures: 1},
+  {id: 3, name: "Coming Soon!", figures: 0},
+  {id: 4, name: "Coming Soon!", figures: 0}
+];
+
+var main = document.querySelector('.main');
+var leftHead = document.querySelector('.left-head');
+var rightHead = document.querySelector('.right-head');
+
+var loadMainPage = function () {
+  // Load menu
+  var menu = document.querySelector('#menu').content.cloneNode(true);
+  main.appendChild(menu);
+
+  // Load menu items
+  for (var i = 0; i < chapters.length; i++) {
+    var menuItem = document.querySelector('#menu-item').content.cloneNode(true);
+    menuItem.querySelector('.menu-item').innerText = chapters[i].name;
+    menuItem.querySelector('.menu-item').onclick = createClickHandler(chapters[i]);
+    document.querySelector('.menu').appendChild(menuItem);
+  }
+}
+
+var loadChapter = function (chap) {
+  // Set chapter name in header
+  leftHead.onclick = handleHeaderClick;
+  rightHead.innerText = chap.name;
+
+  // Remove menu
+  main.removeChild(document.querySelector('.menu'));
+
+  // Load chapter container
+  var chapter = document.querySelector('#chapter').content.cloneNode(true);
+  main.appendChild(chapter);
+
+  // Load figure containers
+  for (var i = 0; i < chap.figures; i++) {
+    var figure = document.querySelector('#figure').content.cloneNode(true);
+    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + (i+1));
+    document.querySelector('.chapter').appendChild(figure);
+  }
+
+  // Run figure scripts
+  run_scripts(chap);
+}
+
+var prepareMainPage = function () {
+  rightHead.innerText = "";
+  main.removeChild(document.querySelector('.chapter'));
+}
+
+var handleHeaderClick = function () {
+  prepareMainPage();
+  loadMainPage();
+}
+
+var run_scripts = function (chap) {
+  lesson1.run();
+  lesson2.run();
+  lesson3.run();
+  lesson4.run();
+  lesson5.run();
+
+}
+
+var createClickHandler = function (arg) {
+  return function () { loadChapter(arg) }
+}
+
+loadMainPage();
+
 },{"./lesson1.js":2,"./lesson2.js":3,"./lesson3.js":4,"./lesson4.js":5,"./lesson5.js":6}],2:[function(require,module,exports){
 var d3 = require('d3');
 
-var dataSet = [];
-for (var i = 0; i < 30; i++) {
-  dataSet[i] = Math.random()*250 + 50;
-}
+module.exports.run = function () {
+  var dataSet = [];
+  for (var i = 0; i < 30; i++) {
+    dataSet[i] = Math.random()*250 + 50;
+  }
 
-d3.select('.l1')
-  .selectAll('div')
-  .data(dataSet)
-  .enter()
-  .append('div')
-  .attr('class','bar')
-  .style("height", function (d) { return d + 'px' });
+  d3.select('.fig1-1')
+    .selectAll('div')
+    .data(dataSet)
+    .enter()
+    .append('div')
+    .attr('class','bar')
+    .style("height", function (d) { return d + 'px' });
+
+}
 
 },{"d3":7}],3:[function(require,module,exports){
 var d3 = require('d3');
 
-var dataSet = [];
-var size = 7;
-for (var i = 0; i < size; i++) {
-  dataSet[i] = Math.random()*50 + 10;
+module.exports.run = function () {
+  var dataSet = [];
+  var size = 7;
+  for (var i = 0; i < size; i++) {
+    dataSet[i] = Math.random()*50 + 10;
+  }
+
+  var svg = d3.select('.fig1-2').append('svg');
+  svg.attr('width','100%').attr('height','160px');
+
+  var circles = svg.selectAll('circle').data(dataSet).enter().append('circle');
+  circles.attr('cx', function (d, i) { return (( i * 100  / size ) + (50 / size))+ '%'; })
+    .attr('cy', '50%')
+    .attr('r', function (d) {return d})
+    .attr('class', 'bubble');
 }
-
-var svg = d3.select('.l2').append('svg');
-svg.attr('width','100%').attr('height','160px');
-
-var circles = svg.selectAll('circle').data(dataSet).enter().append('circle');
-circles.attr('cx', function (d, i) { return (( i * 100  / size ) + (50 / size))+ '%'; })
-  .attr('cy', '50%')
-  .attr('r', function (d) {return d})
-  .attr('class', 'bubble');
 
 },{"d3":7}],4:[function(require,module,exports){
 var d3 = require('d3');
 
-var dataSet = [];
-var size = 30;
+module.exports.run = function () {
+  var dataSet = [];
+  var size = 30;
 
-for (var i = 0; i < size; i++) {
-  dataSet[i] = Math.random()*20 + 5;
+  for (var i = 0; i < size; i++) {
+    dataSet[i] = Math.random()*20 + 5;
+  }
+
+  var containerHeight = 300;
+
+  var calculateX = function (d, i) {
+    var percentage = (i / size) * 100;
+    return percentage + '%';
+  }
+
+  var calculateY = function (d) {
+    return containerHeight - calculateHeight(d);
+  }
+
+  var width = (100 / size) - 0.5;
+
+  var calculateHeight = function (d) {
+    return d*10;
+  }
+
+  var calculateOpacity = function (d) {
+    var val = d / 25;
+    return val;
+    ;
+  }
+
+  var svg = d3.select('.fig1-3')
+              .append('svg')
+              .attr('width', '100%')
+              .attr('height', containerHeight);
+
+  var rects = svg.selectAll('rect')
+     .data(dataSet)
+     .enter()
+     .append('rect')
+     .attr('x', calculateX)
+     .attr('y', calculateY)
+     .attr('width', width + '%')
+     .attr('height', calculateHeight)
+     .attr('opacity', calculateOpacity)
+     .attr('class', 'bar');
+
+  svg.selectAll('text')
+     .data(dataSet)
+     .enter()
+     .append('text')
+     .text( function (d) {
+       return Math.round(d)
+     })
+     .attr('x', function (d,i) {
+       return ((i / size) * 100 + width/2) + '%';
+     })
+     .attr('y', function (d) {
+       return containerHeight - calculateHeight(d) + 20;
+     })
+     .attr('fill', '#fff')
+     .attr("text-anchor", "middle");
+
+
 }
-
-var containerHeight = 300;
-
-var calculateX = function (d, i) {
-  var percentage = (i / size) * 100;
-  return percentage + '%';
-}
-
-var calculateY = function (d) {
-  return containerHeight - calculateHeight(d);
-}
-
-var width = (100 / size) - 0.5;
-
-var calculateHeight = function (d) {
-  return d*10;
-}
-
-var calculateOpacity = function (d) {
-  var val = d / 25;
-  return val;
-  ;
-}
-
-var svg = d3.select('.l3')
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', containerHeight);
-
-var rects = svg.selectAll('rect')
-   .data(dataSet)
-   .enter()
-   .append('rect')
-   .attr('x', calculateX)
-   .attr('y', calculateY)
-   .attr('width', width + '%')
-   .attr('height', calculateHeight)
-   .attr('opacity', calculateOpacity)
-   .attr('class', 'bar');
-
-svg.selectAll('text')
-   .data(dataSet)
-   .enter()
-   .append('text')
-   .text( function (d) {
-     return Math.round(d)
-   })
-   .attr('x', function (d,i) {
-     return ((i / size) * 100 + width/2) + '%';
-   })
-   .attr('y', function (d) {
-     return containerHeight - calculateHeight(d) + 20;
-   })
-   .attr('fill', '#fff')
-   .attr("text-anchor", "middle");
 
 },{"d3":7}],5:[function(require,module,exports){
 var d3 = require('d3');
 
-// ----- DATASET -----
+module.exports.run = function () {
 
-var dataSet = [];
-var size = 60;
-for (var i = 0; i < size; i++) {
-  dataSet[i] = [ Math.random()*20, Math.random()*20 ];
+  // ----- DATASET -----
+
+  var dataSet = [];
+  var size = 60;
+  for (var i = 0; i < size; i++) {
+    dataSet[i] = [ Math.random()*20, Math.random()*20 ];
+  }
+
+  // ----- VISUALIZATION -----
+
+  var w = 900;
+  var h = 500;
+  var padding = 25;
+
+  var svg = d3.select('.fig1-4')
+              .append('svg')
+              .attr('width', w)
+              .attr('height', h);
+
+  var xScale = d3.scale.linear()
+                 .domain([0, 20])
+                 .range([padding, w - padding]);
+
+  var yScale = d3.scale.linear()
+                 .domain([0, 20])
+                 .range([h - padding, padding]);
+
+  var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .orient('bottom')
+                    .ticks(5);
+
+  var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient('left')
+                    .ticks(5);
+
+  svg.append('g')
+     .attr('class', 'axis')
+     .attr("transform", "translate(0," + (h - padding) + ")")
+     .call(xAxis);
+
+  svg.append('g')
+     .attr('class', 'axis')
+     .attr("transform", "translate(" + padding + ",0)")
+     .call(yAxis);
+
+  svg.selectAll('circle')
+     .data(dataSet)
+     .enter()
+     .append('circle')
+     .attr('cx', w/2)
+     .attr('cy', h/2)
+     .attr('r',0)
+     .transition()
+     .duration(1000)
+     .delay(function (d,i) {
+       return i*30;
+     })
+     .attr('r', function (d) {
+       return ( Math.sqrt( (d[0] * d[0]) + (d[1] * d[1]) ) );
+     })
+     .attr('class', 'bubble')
+     .attr('opacity', function (d) {
+       return ( d[0] / 40 + 0.5 );
+     })
+     .attr('cx', function (d) {
+       var xpos = xScale(d[0]);
+       return xpos;
+     })
+     .attr('cy', function (d) {
+       return yScale(d[1]);
+     });
+
 }
-
-// ----- VISUALIZATION -----
-
-var w = 900;
-var h = 500;
-var padding = 25;
-
-var svg = d3.select('.l4')
-            .append('svg')
-            .attr('width', w)
-            .attr('height', h);
-
-var xScale = d3.scale.linear()
-               .domain([0, 20])
-               .range([padding, w - padding]);
-
-var yScale = d3.scale.linear()
-               .domain([0, 20])
-               .range([h - padding, padding]);
-
-var xAxis = d3.svg.axis()
-                  .scale(xScale)
-                  .orient('bottom')
-                  .ticks(5);
-
-var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient('left')
-                  .ticks(5);
-
-svg.append('g')
-   .attr('class', 'axis')
-   .attr("transform", "translate(0," + (h - padding) + ")")
-   .call(xAxis);
-
-svg.append('g')
-   .attr('class', 'axis')
-   .attr("transform", "translate(" + padding + ",0)")
-   .call(yAxis);
-
-svg.selectAll('circle')
-   .data(dataSet)
-   .enter()
-   .append('circle')
-   .attr('cx', w/2)
-   .attr('cy', h/2)
-   .attr('r',0)
-   .transition()
-   .duration(1000)
-   .delay(function (d,i) {
-     return i*30;
-   })
-   .attr('r', function (d) {
-     return ( Math.sqrt( (d[0] * d[0]) + (d[1] * d[1]) ) );
-   })
-   .attr('class', 'bubble')
-   .attr('opacity', function (d) {
-     return ( d[0] / 40 + 0.5 );
-   })
-   .attr('cx', function (d) {
-     var xpos = xScale(d[0]);
-     return xpos;
-   })
-   .attr('cy', function (d) {
-     return yScale(d[1]);
-   });
 
 },{"d3":7}],6:[function(require,module,exports){
 var d3 = require('d3');
 
-var w = 900,
-    h = 700;
+module.exports.run = function () {
+  var w = 900,
+      h = 700;
 
-var svg = d3.select('.l5').append('svg').attr('width', w).attr('height', h);
+  var svg = d3.select('.fig2-1').append('svg').attr('width', w).attr('height', h);
 
-var size = 20,
-    r = 15;
+  var size = 20,
+      r = 15;
 
-var getRandomParticle = function () {
-  var posx = Math.random() * w;
-  var posy = Math.random() * h;
-  var dir = Math.random() * (2*Math.PI);
-  var velx = Math.cos(dir);
-  var vely = Math.sin(dir);
-  var fill = Math.random() * 360;
+  var getRandomParticle = function () {
+    var posx = Math.random() * w;
+    var posy = Math.random() * h;
+    var dir = Math.random() * (2*Math.PI);
+    var velx = Math.cos(dir);
+    var vely = Math.sin(dir);
+    var fill = Math.random() * 360;
 
-  return {'pos':{'x':posx, 'y':posy}, 'vel':{'x':velx, 'y':vely}, 'fill':fill};
+    return {'pos':{'x':posx, 'y':posy}, 'vel':{'x':velx, 'y':vely}, 'fill':fill};
+  }
+
+  var particles = []
+  for (var i = 0; i < size; i++) {
+    particles[i] = getRandomParticle();
+  }
+
+  var my_mod = function(a, n) {
+    return ((a%n)+n)%n
+  };
+
+  var circles = svg.selectAll('circle')
+     .data(particles)
+     .enter()
+     .append('circle')
+     .attr('cx', function (p) {
+       return p.pos.x
+     })
+     .attr('cy', function (p) {
+       return p.pos.y
+     })
+     .attr('r', r)
+     .attr('fill', function (p) {
+       return d3.hsl(Math.round(p.fill), 1, .7 );
+     })
+     .attr('class', 'bubble');
+
+  var animate = function (elapsed) {
+    circles
+    .attr('cx', function (p) {
+      return my_mod((p.pos.x + p.vel.x * .08 * elapsed), w);
+    })
+    .attr('cy', function (p) {
+      return my_mod((p.pos.y + p.vel.y * .08 * elapsed), h);
+    });
+  }
+
+  d3.timer( animate );
+
 }
-
-var particles = []
-for (var i = 0; i < size; i++) {
-  particles[i] = getRandomParticle();
-}
-
-var my_mod = function(a, n) {
-  return ((a%n)+n)%n
-};
-
-var circles = svg.selectAll('circle')
-   .data(particles)
-   .enter()
-   .append('circle')
-   .attr('cx', function (p) {
-     return p.pos.x
-   })
-   .attr('cy', function (p) {
-     return p.pos.y
-   })
-   .attr('r', r)
-   .attr('fill', function (p) {
-     return d3.hsl(Math.round(p.fill), 1, .7 );
-   })
-   .attr('class', 'bubble');
-
-var animate = function (elapsed) {
-  circles
-  .attr('cx', function (p) {
-    return my_mod((p.pos.x + p.vel.x * .08 * elapsed), w);
-  })
-  .attr('cy', function (p) {
-    return my_mod((p.pos.y + p.vel.y * .08 * elapsed), h);
-  });
-}
-
-d3.timer( animate );
 
 },{"d3":7}],7:[function(require,module,exports){
 !function() {

@@ -15,7 +15,9 @@ header {
   margin:75px 0 20px;
   letter-spacing: .2em;
   font-size:1.3em;
+  text-transform: uppercase;
 }
+header .left-head {cursor:pointer;}
 header .left-head:hover {color:#f66;}
 header .right-head {float:right;}
 footer {
@@ -39,6 +41,7 @@ hr { clear:both; decoration:none; border:none; height:1px; color: #ddd; backgrou
   border-radius:5px;
   padding:25px;
   background-color: #f2f2f2;
+  cursor:pointer;
   transition: background-color 200ms, border 200ms, color 200ms;
 }
 .menu-item:hover {
@@ -51,19 +54,19 @@ hr { clear:both; decoration:none; border:none; height:1px; color: #ddd; backgrou
 /* Chapters */
 
 h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing:.06em;}
-.lesson { width:900px; margin-bottom:40px; padding:30px; border:1px solid #ddd; border-radius:5px;}
+.figure { width:900px; margin-bottom:40px; padding:30px; border:1px solid #ddd; border-radius:5px;}
 
 /* Lesson 01 */
-.l1 .bar { display:inline-block; background-color: #f66; width:26px; margin:2px; vertical-align:bottom;}
+.fig1-1 .bar { display:inline-block; background-color: #f66; width:26px; margin:2px; vertical-align:bottom;}
 
 /* Lesson 02 */
-.l2 .bubble { fill:#f66; }
+.fig1-2 .bubble { fill:#f66; }
 
 /* Lesson 03 */
-.l3 .bar { fill: #f66; }
+.fig1-3 .bar { fill: #f66; }
 
 /* Lesson 04 */
-.l4 .bubble { fill: #f66; }
+.fig1-4 .bubble { fill: #f66; }
 .axis path,
 .axis line {
     fill: none;
@@ -73,4 +76,4 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
 .axis text { stroke: #ddd; font-size: .6em; }
 
 /* Lesson 05 */
-.l5 .bubble { mix-blend-mode:multiply; }
+.fig2-1 .bubble { mix-blend-mode:multiply; }
