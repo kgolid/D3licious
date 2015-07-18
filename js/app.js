@@ -1,9 +1,3 @@
-var lesson1 = require('./figures/fig1-1.js');
-var lesson2 = require('./figures/fig1-2.js');
-var lesson3 = require('./figures/fig1-3.js');
-var lesson4 = require('./figures/fig1-4.js');
-var lesson5 = require('./figures/fig2-1.js');
-
 var chapters = require('./chapters.js');
 
 var main = document.querySelector('.main');
@@ -63,11 +57,9 @@ var handleHeaderClick = function () {
 }
 
 var run_scripts = function (chap) {
-  lesson1.run();
-  lesson2.run();
-  lesson3.run();
-  lesson4.run();
-  lesson5.run();
+  for (var i = 0; i < chap.figures.length; i++) {
+    chap.figures[i].script.run();
+  }
 }
 
 var createClickHandler = function (arg) {
