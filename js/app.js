@@ -1,8 +1,8 @@
-var lesson1 = require('./lesson1.js');
-var lesson2 = require('./lesson2.js');
-var lesson3 = require('./lesson3.js');
-var lesson4 = require('./lesson4.js');
-var lesson5 = require('./lesson5.js');
+var lesson1 = require('./figures/fig1-1.js');
+var lesson2 = require('./figures/fig1-2.js');
+var lesson3 = require('./figures/fig1-3.js');
+var lesson4 = require('./figures/fig1-4.js');
+var lesson5 = require('./figures/fig2-1.js');
 
 var chapters = [
   {id: 1, name: "Scott's tutorial", figures: 4},
