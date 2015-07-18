@@ -1,10 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var lesson1 = require('./figures/fig1-1.js');
-var lesson2 = require('./figures/fig1-2.js');
-var lesson3 = require('./figures/fig1-3.js');
-var lesson4 = require('./figures/fig1-4.js');
-var lesson5 = require('./figures/fig2-1.js');
-
 var chapters = require('./chapters.js');
 
 var main = document.querySelector('.main');
@@ -64,11 +58,9 @@ var handleHeaderClick = function () {
 }
 
 var run_scripts = function (chap) {
-  lesson1.run();
-  lesson2.run();
-  lesson3.run();
-  lesson4.run();
-  lesson5.run();
+  for (var i = 0; i < chap.figures.length; i++) {
+    chap.figures[i].script.run();
+  }
 }
 
 var createClickHandler = function (arg) {
@@ -77,7 +69,16 @@ var createClickHandler = function (arg) {
 
 loadMainPage();
 
-},{"./chapters.js":2,"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7}],2:[function(require,module,exports){
+},{"./chapters.js":2}],2:[function(require,module,exports){
+var fig1_1 = require('./figures/fig1-1.js');
+var fig1_2 = require('./figures/fig1-2.js');
+var fig1_3 = require('./figures/fig1-3.js');
+var fig1_4 = require('./figures/fig1-4.js');
+
+var fig2_1 = require('./figures/fig2-1.js');
+
+var fig3_1 = require('./figures/fig3-1.js');
+
 module.exports = [
   {
     id: 1,
@@ -85,19 +86,23 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Data in divs."
+        description: "Data in divs.",
+        script: fig1_1
       },
       {
         id: 2,
-        description: "Enter svg."
+        description: "Enter svg.",
+        script: fig1_2
       },
       {
         id: 3,
-        description: "Let's do that again."
+        description: "Let's do that again.",
+        script: fig1_3
       },
       {
         id: 4,
-        description: "Scatter!"
+        description: "Scatter!",
+        script: fig1_4
       }
     ]
   },
@@ -107,14 +112,21 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Floating droplets."
+        description: "Floating droplets.",
+        script: fig2_1
       }
     ]
   },
   {
     id: 3,
-    name: "Coming Soon!",
-    figures: []
+    name: "Cellular Automata",
+    figures: [
+      {
+        id: 1,
+        description: "Cellular Automata.",
+        script: fig3_1
+      }
+    ]
   },
   {
     id: 4,
@@ -123,7 +135,7 @@ module.exports = [
   }
 ];
 
-},{}],3:[function(require,module,exports){
+},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -142,7 +154,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":8}],4:[function(require,module,exports){
+},{"d3":9}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -162,7 +174,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":8}],5:[function(require,module,exports){
+},{"d3":9}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -231,7 +243,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":8}],6:[function(require,module,exports){
+},{"d3":9}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -312,7 +324,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":8}],7:[function(require,module,exports){
+},{"d3":9}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -374,7 +386,78 @@ module.exports.run = function () {
 
 }
 
-},{"d3":8}],8:[function(require,module,exports){
+},{"d3":9}],8:[function(require,module,exports){
+var d3 = require('d3');
+
+module.exports.run = function () {
+  var w = 900,
+      h = 450;
+      pixelSize = 5;
+
+  var svg = d3.select('.fig3-1').append('svg').attr('width', w).attr('height', h);
+
+  var gw = w/pixelSize;
+  var gh = h/pixelSize;
+
+  var initial = initDataSet(gw, gh);
+
+  var cells = fillCells(initial);
+
+  var rows = svg.selectAll('.row')
+                .data(cells)
+                .enter().append("svg:g")
+                .attr("class", "series");
+
+  var cell = rows.selectAll('.cell')
+                .data(function (d,i,j) { return d })
+                .enter().append("rect")
+                .attr('x', function (d,i,j) { return i * pixelSize; })
+                .attr('y', function (d,i,j) { return j * pixelSize; })
+                .attr('width', pixelSize)
+                .attr('height', pixelSize)
+                .attr('opacity', function (d) { return d; });
+}
+
+var initDataSet = function (width, height) {
+  var dataSet = []
+  for (var i = 0; i < height; i++) {
+    dataSet.push([]);
+    for (var j = 0; j < width; j++) {
+      dataSet[i].push(0);
+    }
+  }
+  dataSet[0][width/2] = 1;
+  return dataSet;
+}
+
+var getSuccesor = function (l, t, r, ran) {
+  var num = l + (2 * t) + (4 * r);
+
+  return parseInt(ran.charAt(num));
+}
+
+var fillCells = function (cells) {
+  var random = Math.round(Math.random() * 256);
+  var arr = FormatNumberLength(random.toString(2), 8);
+  console.log(arr);
+  for (var i = 1; i < cells.length; i++) {
+    for (var j = 1; j < cells[i].length-1; j++) {
+      cells[i][j] = getSuccesor( cells[i-1][j-1], cells[i-1][j], cells[i-1][j+1] , arr);
+    }
+  }
+
+  return cells;
+}
+
+function FormatNumberLength(num, length) {
+    var r = "" + num;
+    while (r.length < length) {
+        r = "0" + r;
+    }
+    return r;
+}
+
+},{"d3":9}],9:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
