@@ -4,12 +4,7 @@ var lesson3 = require('./figures/fig1-3.js');
 var lesson4 = require('./figures/fig1-4.js');
 var lesson5 = require('./figures/fig2-1.js');
 
-var chapters = [
-  {id: 1, name: "Scott's tutorial", figures: 4},
-  {id: 2, name: "Perpetual motion", figures: 1},
-  {id: 3, name: "Coming Soon!", figures: 0},
-  {id: 4, name: "Coming Soon!", figures: 0}
-];
+var chapters = require('./chapters.js');
 
 var main = document.querySelector('.main');
 var leftHead = document.querySelector('.left-head');
@@ -42,9 +37,10 @@ var loadChapter = function (chap) {
   main.appendChild(chapter);
 
   // Load figure containers
-  for (var i = 0; i < chap.figures; i++) {
+  for (var i = 0; i < chap.figures.length; i++) {
     var figure = document.querySelector('#figure').content.cloneNode(true);
-    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + (i+1));
+    figure.querySelector('.description').innerText = chap.figures[i].description;
+    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + chap.figures[i].id);
     document.querySelector('.chapter').appendChild(figure);
   }
 
