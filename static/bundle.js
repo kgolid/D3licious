@@ -1,16 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var lesson1 = require('./lesson1.js');
-var lesson2 = require('./lesson2.js');
-var lesson3 = require('./lesson3.js');
-var lesson4 = require('./lesson4.js');
-var lesson5 = require('./lesson5.js');
+var lesson1 = require('./figures/fig1-1.js');
+var lesson2 = require('./figures/fig1-2.js');
+var lesson3 = require('./figures/fig1-3.js');
+var lesson4 = require('./figures/fig1-4.js');
+var lesson5 = require('./figures/fig2-1.js');
 
-var chapters = [
-  {id: 1, name: "Scott's tutorial", figures: 4},
-  {id: 2, name: "Perpetual motion", figures: 1},
-  {id: 3, name: "Coming Soon!", figures: 0},
-  {id: 4, name: "Coming Soon!", figures: 0}
-];
+var chapters = require('./chapters.js');
 
 var main = document.querySelector('.main');
 var leftHead = document.querySelector('.left-head');
@@ -43,9 +38,10 @@ var loadChapter = function (chap) {
   main.appendChild(chapter);
 
   // Load figure containers
-  for (var i = 0; i < chap.figures; i++) {
+  for (var i = 0; i < chap.figures.length; i++) {
     var figure = document.querySelector('#figure').content.cloneNode(true);
-    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + (i+1));
+    figure.querySelector('.description').innerText = chap.figures[i].description;
+    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + chap.figures[i].id);
     document.querySelector('.chapter').appendChild(figure);
   }
 
@@ -54,7 +50,11 @@ var loadChapter = function (chap) {
 }
 
 var prepareMainPage = function () {
+  // Reset header
+  leftHead.onclick = null;
   rightHead.innerText = "";
+
+  // Remove chapter container
   main.removeChild(document.querySelector('.chapter'));
 }
 
@@ -69,7 +69,6 @@ var run_scripts = function (chap) {
   lesson3.run();
   lesson4.run();
   lesson5.run();
-
 }
 
 var createClickHandler = function (arg) {
@@ -78,7 +77,53 @@ var createClickHandler = function (arg) {
 
 loadMainPage();
 
-},{"./lesson1.js":2,"./lesson2.js":3,"./lesson3.js":4,"./lesson4.js":5,"./lesson5.js":6}],2:[function(require,module,exports){
+},{"./chapters.js":2,"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7}],2:[function(require,module,exports){
+module.exports = [
+  {
+    id: 1,
+    name: "Scott's tutorial",
+    figures: [
+      {
+        id: 1,
+        description: "Data in divs."
+      },
+      {
+        id: 2,
+        description: "Enter svg."
+      },
+      {
+        id: 3,
+        description: "Let's do that again."
+      },
+      {
+        id: 4,
+        description: "Scatter!"
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Perpetual motion",
+    figures: [
+      {
+        id: 1,
+        description: "Floating droplets."
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Coming Soon!",
+    figures: []
+  },
+  {
+    id: 4,
+    name: "Coming Soon!",
+    figures: []
+  }
+];
+
+},{}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -97,7 +142,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":7}],3:[function(require,module,exports){
+},{"d3":8}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -117,7 +162,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":7}],4:[function(require,module,exports){
+},{"d3":8}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -186,7 +231,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":7}],5:[function(require,module,exports){
+},{"d3":8}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -267,7 +312,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":7}],6:[function(require,module,exports){
+},{"d3":8}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -329,7 +374,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":7}],7:[function(require,module,exports){
+},{"d3":8}],8:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
