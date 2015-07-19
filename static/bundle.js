@@ -79,6 +79,8 @@ var fig2_1 = require('./figures/fig2-1.js');
 
 var fig3_1 = require('./figures/fig3-1.js');
 
+var fig4_1 = require('./figures/fig4-1.js');
+
 module.exports = [
   {
     id: 1,
@@ -130,12 +132,18 @@ module.exports = [
   },
   {
     id: 4,
-    name: "Coming Soon!",
-    figures: []
+    name: "Datasets",
+    figures: [
+      {
+        id: 1,
+        description: "Let's look at the data...",
+        script: fig4_1
+      }
+    ]
   }
 ];
 
-},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8}],3:[function(require,module,exports){
+},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig4-1.js":9}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -154,7 +162,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":9}],4:[function(require,module,exports){
+},{"d3":10}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -174,7 +182,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":9}],5:[function(require,module,exports){
+},{"d3":10}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -243,7 +251,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":9}],6:[function(require,module,exports){
+},{"d3":10}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -324,7 +332,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":9}],7:[function(require,module,exports){
+},{"d3":10}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -386,7 +394,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":9}],8:[function(require,module,exports){
+},{"d3":10}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -426,18 +434,18 @@ var run = function () {
   var render = function () {
     var row = cells.length-1;
     var rows = svg.selectAll('.row')
-               .data(cells)
-               .enter().append("svg:g")
-               .attr("class", "row");
+        .data(cells)
+        .enter().append("svg:g")
+        .attr("class", "row");
 
     var cell = rows.selectAll('.cell')
-               .data(function (d) { return d; })
-               .enter().append("rect")
-               .attr('x', function (d,i) { return i * pixelSize; })
-               .attr('y', function () { return row * pixelSize; })
-               .attr('width', pixelSize).attr('height', pixelSize)
-               .attr('opacity', function (d) { return d; })
-               .attr('class', 'cell');
+        .data(function (d) { return d; })
+        .enter().append("rect")
+        .attr('x', function (d,i) { return i * pixelSize; })
+        .attr('y', function () { return row * pixelSize; })
+        .attr('width', pixelSize).attr('height', pixelSize)
+        .attr('opacity', function (d) { return d; })
+        .attr('class', 'cell');
   };
 
   d3.timer(function () {
@@ -478,7 +486,79 @@ module.exports = {
   run: run
 }
 
-},{"d3":9}],9:[function(require,module,exports){
+},{"d3":10}],9:[function(require,module,exports){
+var d3 = require('d3');
+
+var svg, legend;
+var w = 900,
+    h = 600,
+    r = 2;
+
+var xColumn, yColumn, tColumn;
+var xScale, yScale, tScale;
+
+var setup = function () {
+  xColumn = "tid";
+  yColumn = "antall";
+  tColumn = "alder";
+
+  xScale = d3.scale.linear().range([0, w]);
+  yScale = d3.scale.linear().range([h, 0]);
+  tScale = d3.scale.category20();
+
+  svg = d3.select('.fig4-1').append('svg').attr('width', w).attr('height', h);
+  legend = d3.select('.fig4-1').append('div');
+
+  d3.csv('http://data.ssb.no/api/v0/dataset/65195.csv?lang=no', type, function (data) {
+    draw(data, "");
+  });
+}
+
+var type = function (d) {
+  d["antall"] = +d["Personer etter alder, kjønn og tid"];
+  d["tid"] = +d["tid"];
+  return d;
+}
+
+var draw = function (data, chosen) {
+  xScale.domain( d3.extent(data, function (d) { return d[xColumn]; }) );
+  yScale.domain( [0, d3.max(data, function (d) { return d[yColumn]; })] );
+
+  var points = svg.selectAll("circle").data(data);
+  points.enter().append("circle")
+        .attr("cx", function (d){ return xScale(d[xColumn]); })
+        .attr("cy", function (d){ return yScale(d[yColumn]); })
+        .attr("fill", function (d){ return tScale(d[tColumn]); })
+        .attr("r", r)
+  points.attr("opacity", function (d) {
+    return (d[tColumn] == chosen)? 1:0;
+  });
+
+  legend.selectAll('p').data(getTypes(data)).enter().append('p')
+        .html(function (d) { return d; })
+        .style('background-color', function (d) { return tScale(d); })
+        .on('click', function (d) { draw(data, d); })
+}
+
+var run = function () {
+  setup();
+}
+
+var getTypes = function (data) {
+  var categories = [];
+  data.forEach( function (d) {
+    if( categories.indexOf(d[tColumn]) == -1 ) {
+      categories.push(d[tColumn]);
+    }
+  });
+  return categories;
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":10}],10:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"

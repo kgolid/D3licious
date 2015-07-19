@@ -7,6 +7,8 @@ var fig2_1 = require('./figures/fig2-1.js');
 
 var fig3_1 = require('./figures/fig3-1.js');
 
+var fig4_1 = require('./figures/fig4-1.js');
+
 module.exports = [
   {
     id: 1,
@@ -58,7 +60,13 @@ module.exports = [
   },
   {
     id: 4,
-    name: "Coming Soon!",
-    figures: []
+    name: "Datasets",
+    figures: [
+      {
+        id: 1,
+        description: "Let's look at the data...",
+        script: fig4_1
+      }
+    ]
   }
 ];
