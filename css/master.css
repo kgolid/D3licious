@@ -77,3 +77,8 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
 
 /* Lesson 05 */
 .fig2-1 .bubble { mix-blend-mode:multiply; }
+
+/* Lesson 06 */
+.fig3-1 .cell {
+  fill: steelblue;
+}
