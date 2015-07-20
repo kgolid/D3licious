@@ -13,6 +13,7 @@ module.exports = [
   {
     id: 1,
     name: "Scott Murray's tutorial",
+    date: "2015-07-10",
     figures: [
       {
         id: 1,
@@ -39,6 +40,7 @@ module.exports = [
   {
     id: 2,
     name: "Perpetual motion",
+    date: "2015-07-12",
     figures: [
       {
         id: 1,
@@ -50,6 +52,7 @@ module.exports = [
   {
     id: 3,
     name: "Cellular Automata",
+    date: "2015-07-18",
     figures: [
       {
         id: 1,
@@ -61,6 +64,7 @@ module.exports = [
   {
     id: 4,
     name: "Charts from external data",
+    date: "2015-07-19",
     figures: [
       {
         id: 1,
