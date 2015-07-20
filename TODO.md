@@ -4,5 +4,10 @@ Improvements and fixes
 - Fix double home tap.
 
 Upcoming figures
-- Cellular Automata
+- Cellular Automata - IN PROGRESS
+  - 2 start configs
+- Charts from csv datasets - IN PROGRESS
+  - make line charts
+  - Mark on hover (remove irrelevant data)
+  - Fancy transitions
 - Color blend blob
