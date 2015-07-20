@@ -12,7 +12,7 @@ var fig4_1 = require('./figures/fig4-1.js');
 module.exports = [
   {
     id: 1,
-    name: "Scott's tutorial",
+    name: "Scott Murray's tutorial",
     figures: [
       {
         id: 1,
@@ -60,11 +60,11 @@ module.exports = [
   },
   {
     id: 4,
-    name: "Datasets",
+    name: "Charts from external data",
     figures: [
       {
         id: 1,
-        description: "Let's look at the data...",
+        description: "Let's look at some data...",
         script: fig4_1
       }
     ]
