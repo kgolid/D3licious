@@ -6,6 +6,7 @@ var fig2_1 = require('./figures/fig2-1.js');
 var fig3_1 = require('./figures/fig3-1.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
+var fig5_2 = require('./figures/fig5-2.js');
 
 module.exports = [
   {
@@ -78,8 +79,13 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Aging particles",
+        description: "Particles expanding",
         script: fig5_1
+      },
+      {
+        id: 2,
+        description: "Particles with random lifespans",
+        script: fig5_2
       }
     ]
   }

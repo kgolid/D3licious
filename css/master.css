@@ -109,3 +109,8 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
   fill:none;
   stroke:steelblue;
 }
+
+.fig5-2 .particle {
+  fill:steelblue;
+  stroke:none;
+}
