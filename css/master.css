@@ -97,11 +97,15 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
   display:inline-block;
   cursor:pointer;
 }
-
 .fig4-1 .line {
   fill:none;
   stroke-width:3px;
 }
-
 .fig4-1 .axis path, .fig4-1 .axis line { fill: none; stroke: #999; shape-rendering: crispEdges; }
 .fig4-1 .axis text { stroke: #999; font-size: .6em; }
+
+/* Figure 5-1 */
+.fig5-1 .particle {
+  fill:none;
+  stroke:steelblue;
+}

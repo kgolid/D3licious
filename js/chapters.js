@@ -2,12 +2,10 @@ var fig1_1 = require('./figures/fig1-1.js');
 var fig1_2 = require('./figures/fig1-2.js');
 var fig1_3 = require('./figures/fig1-3.js');
 var fig1_4 = require('./figures/fig1-4.js');
-
 var fig2_1 = require('./figures/fig2-1.js');
-
 var fig3_1 = require('./figures/fig3-1.js');
-
 var fig4_1 = require('./figures/fig4-1.js');
+var fig5_1 = require('./figures/fig5-1.js');
 
 module.exports = [
   {
@@ -68,8 +66,20 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Let's look at some data...",
+        description: "Norwegian Population, 1986-2014",
         script: fig4_1
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Force Layouts",
+    date: "2015-07-21",
+    figures: [
+      {
+        id: 1,
+        description: "Aging particles",
+        script: fig5_1
       }
     ]
   }

@@ -74,17 +74,16 @@ var fig1_1 = require('./figures/fig1-1.js');
 var fig1_2 = require('./figures/fig1-2.js');
 var fig1_3 = require('./figures/fig1-3.js');
 var fig1_4 = require('./figures/fig1-4.js');
-
 var fig2_1 = require('./figures/fig2-1.js');
-
 var fig3_1 = require('./figures/fig3-1.js');
-
 var fig4_1 = require('./figures/fig4-1.js');
+var fig5_1 = require('./figures/fig5-1.js');
 
 module.exports = [
   {
     id: 1,
     name: "Scott Murray's tutorial",
+    date: "2015-07-10",
     figures: [
       {
         id: 1,
@@ -111,6 +110,7 @@ module.exports = [
   {
     id: 2,
     name: "Perpetual motion",
+    date: "2015-07-12",
     figures: [
       {
         id: 1,
@@ -122,6 +122,7 @@ module.exports = [
   {
     id: 3,
     name: "Cellular Automata",
+    date: "2015-07-18",
     figures: [
       {
         id: 1,
@@ -133,17 +134,30 @@ module.exports = [
   {
     id: 4,
     name: "Charts from external data",
+    date: "2015-07-19",
     figures: [
       {
         id: 1,
-        description: "Let's look at some data...",
+        description: "Norwegian Population, 1986-2014",
         script: fig4_1
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Force Layouts",
+    date: "2015-07-21",
+    figures: [
+      {
+        id: 1,
+        description: "Aging particles",
+        script: fig5_1
       }
     ]
   }
 ];
 
-},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig4-1.js":9}],3:[function(require,module,exports){
+},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig4-1.js":9,"./figures/fig5-1.js":10}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -162,7 +176,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":10}],4:[function(require,module,exports){
+},{"d3":11}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -182,7 +196,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":10}],5:[function(require,module,exports){
+},{"d3":11}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -251,7 +265,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":10}],6:[function(require,module,exports){
+},{"d3":11}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -332,7 +346,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":10}],7:[function(require,module,exports){
+},{"d3":11}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -394,7 +408,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":10}],8:[function(require,module,exports){
+},{"d3":11}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -486,7 +500,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":10}],9:[function(require,module,exports){
+},{"d3":11}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -599,7 +613,57 @@ module.exports = {
   run: run
 };
 
-},{"d3":10}],10:[function(require,module,exports){
+},{"d3":11}],10:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var nodes = [];
+var lifespan = 80;
+
+var svg;
+
+function addParticles() {
+  var mouse = d3.mouse(this);
+  var node = {x:mouse[0], y:mouse[1], age:0}
+  nodes.push(node);
+}
+
+function setup() {
+  svg = d3.select('.fig5-1').append('svg').attr('width', w).attr('height', h);
+  svg.on('mousemove', addParticles);
+}
+
+function update() {
+  nodes = nodes.filter( function (p) {
+    return p.age++ < lifespan;
+  });
+}
+
+function display() {
+  var particles = svg.selectAll('circle').data(nodes);
+  particles.enter().append('circle').attr('class', 'particle');
+  particles.attr('r',function (d) { return d.age + 5; })
+    .attr('cx', function (d) { return d.x; })
+    .attr('cy', function (d) { return d.y; })
+    .attr('opacity', function (d) { return (lifespan - d.age) / lifespan });
+  particles.exit().remove();
+}
+
+function run() {
+  setup();
+  d3.timer(function () {
+    update();
+    display();
+  });
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":11}],11:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
