@@ -76,8 +76,10 @@ var fig1_3 = require('./figures/fig1-3.js');
 var fig1_4 = require('./figures/fig1-4.js');
 var fig2_1 = require('./figures/fig2-1.js');
 var fig3_1 = require('./figures/fig3-1.js');
+var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
+var fig5_2 = require('./figures/fig5-2.js');
 
 module.exports = [
   {
@@ -126,8 +128,13 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Cellular Automata.",
+        description: "Pattern generated from single pixel.",
         script: fig3_1
+      },
+      {
+        id: 2,
+        description: "Pattern generated from random string.",
+        script: fig3_2
       }
     ]
   },
@@ -150,14 +157,19 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Aging particles",
+        description: "Particles expanding",
         script: fig5_1
+      },
+      {
+        id: 2,
+        description: "Particles with random lifespans",
+        script: fig5_2
       }
     ]
   }
 ];
 
-},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig4-1.js":9,"./figures/fig5-1.js":10}],3:[function(require,module,exports){
+},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig3-2.js":9,"./figures/fig4-1.js":10,"./figures/fig5-1.js":11,"./figures/fig5-2.js":12}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -176,7 +188,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":11}],4:[function(require,module,exports){
+},{"d3":13}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -196,7 +208,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":11}],5:[function(require,module,exports){
+},{"d3":13}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -265,7 +277,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":11}],6:[function(require,module,exports){
+},{"d3":13}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -346,7 +358,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":11}],7:[function(require,module,exports){
+},{"d3":13}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -408,7 +420,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":11}],8:[function(require,module,exports){
+},{"d3":13}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -500,7 +512,99 @@ module.exports = {
   run: run
 }
 
-},{"d3":11}],9:[function(require,module,exports){
+},{"d3":13}],9:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900,
+    h = 450,
+    pixelSize = 5;
+
+var gw = w/pixelSize,
+    gh = h/pixelSize;
+
+var pattern_dec,
+    pattern;
+
+var initDataSet = function () {
+  pattern_dec = Math.round(Math.random() * 256);
+  pattern = FormatNumberLength(pattern_dec.toString(2), 8);
+
+  var dataSet = [[]];
+  for (var j = 0; j < gw; j++) {
+    var bw = Math.random() >= 0.5 ? 1:0;
+    dataSet[0].push(bw);
+  }
+
+  return dataSet;
+}
+
+var run = function () {
+  var cells = initDataSet();
+
+  var svg = d3.select('.fig3-2').append('svg').attr('width', w).attr('height', h);
+  var button = d3.select('.fig3-2').append('input')
+      .attr('type','button')
+      .attr('value','Start again')
+      .on('click', function () { reset(); });
+  var info = d3.select('.fig3-2').append('p')
+      .html('Pattern: ' + pattern_dec + ' (' + pattern + ')');
+
+  var render = function () {
+    var row = cells.length-1;
+    var rows = svg.selectAll('.row')
+        .data(cells)
+        .enter().append("svg:g")
+        .attr("class", "row");
+
+    var cell = rows.selectAll('.cell')
+        .data(function (d) { return d; })
+        .enter().append("rect")
+        .attr('x', function (d,i) { return i * pixelSize; })
+        .attr('y', function () { return row * pixelSize; })
+        .attr('width', pixelSize).attr('height', pixelSize)
+        .attr('opacity', function (d) { return d; })
+        .attr('class', 'cell');
+  };
+
+  d3.timer(function () {
+    render();
+    var last = cells[cells.length-1];
+    cells.push(getNextRow(last, pattern));
+    return cells.length >= gh;
+  });
+}
+
+var reset = function () {
+  d3.select('.fig3-2').selectAll('*').remove();
+  run();
+}
+
+var getSuccesor = function (l, t, r, ran) {
+  var num = l + (2 * t) + (4 * r);
+  return parseInt(ran.charAt(num));
+}
+
+var getNextRow = function (last, pattern) {
+  var next = [0];
+  for (var i = 1; i < last.length-1; i++) {
+    next.push(getSuccesor( last[i-1], last[i], last[i+1], pattern ));
+  }
+  next.push(0);
+  return next;
+}
+
+function FormatNumberLength(r, length) {
+    while (r.length < length) {
+        r = "0" + r;
+    }
+    return r;
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":13}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -613,7 +717,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":11}],10:[function(require,module,exports){
+},{"d3":13}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -663,7 +767,57 @@ module.exports = {
   run: run
 }
 
-},{"d3":11}],11:[function(require,module,exports){
+},{"d3":13}],12:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var nodes = [];
+var lifespan = 120;
+var dim = 20;
+
+var svg;
+
+function addParticles() {
+  var mouse = d3.mouse(this);
+  var node = {x:mouse[0], y:mouse[1], age:0, lifespan:Math.random()*lifespan}
+  nodes.push(node);
+}
+
+function setup() {
+  svg = d3.select('.fig5-2').append('svg').attr('width', w).attr('height', h);
+  svg.on('mousemove', addParticles);
+}
+
+function update() {
+  nodes = nodes.filter( function (p) {
+    return p.age++ < p.lifespan;
+  });
+}
+
+function display() {
+  var particles = svg.selectAll('circle').data(nodes);
+  particles.enter().append('circle').attr('class', 'particle');
+  particles.attr('r', function (d) {return Math.max(0, dim - dim*(d.age / d.lifespan))})
+    .attr('cx', function (d) { return d.x; })
+    .attr('cy', function (d) { return d.y; });
+  particles.exit().remove();
+}
+
+function run() {
+  setup();
+  d3.timer(function () {
+    update();
+    display();
+  });
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":13}],13:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
