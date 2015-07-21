@@ -4,6 +4,7 @@ var fig1_3 = require('./figures/fig1-3.js');
 var fig1_4 = require('./figures/fig1-4.js');
 var fig2_1 = require('./figures/fig2-1.js');
 var fig3_1 = require('./figures/fig3-1.js');
+var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
@@ -55,8 +56,13 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "Cellular Automata.",
+        description: "Pattern generated from single pixel.",
         script: fig3_1
+      },
+      {
+        id: 2,
+        description: "Pattern generated from random string.",
+        script: fig3_2
       }
     ]
   },

@@ -74,18 +74,18 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
 .fig2-1 .bubble { mix-blend-mode:multiply; }
 
 /* Lesson 06 */
-.fig3-1 {
+.fig3-1, .fig3-2 {
   background-color: #999;
   color: #f9f9f9;
 }
 
-.fig3-1 p{
+.fig3-1 p, .fig3-2 p{
   font-size:.8em;
   vertical-align: bottom;
   float:right;
 }
 
-.fig3-1 .cell {
+.fig3-1 .cell, .fig3-2 .cell {
   fill: #f9f9f9;
 }
 
