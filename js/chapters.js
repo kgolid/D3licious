@@ -12,7 +12,7 @@ var fig5_2 = require('./figures/fig5-2.js');
 module.exports = [
   {
     id: 1,
-    name: "Scott Murray's tutorial",
+    name: "Scott Murray's Tutorial",
     date: "2015-07-10",
     figures: [
       {
@@ -39,7 +39,7 @@ module.exports = [
   },
   {
     id: 2,
-    name: "Perpetual motion",
+    name: "Perpetual Motion",
     date: "2015-07-12",
     figures: [
       {
@@ -68,7 +68,7 @@ module.exports = [
   },
   {
     id: 4,
-    name: "Charts from external data",
+    name: "Charts from External Data",
     date: "2015-07-19",
     figures: [
       {
@@ -80,7 +80,7 @@ module.exports = [
   },
   {
     id: 5,
-    name: "Force Layouts",
+    name: "Standstill Particles",
     date: "2015-07-21",
     figures: [
       {
