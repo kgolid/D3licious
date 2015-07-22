@@ -2,6 +2,7 @@ Improvements and fixes
 - ~~Implement React.~~
 - Decide on svg width handling.
 - Fix double home tap.
+- Implement Mustache templating.
 
 Upcoming figures
 - Cellular Automata - IN PROGRESS
