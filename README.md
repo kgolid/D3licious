@@ -11,8 +11,10 @@ Me learning D3, svg, npm and git.  Link: http://golid.net/D3licious
   - **Lesson 2.1:** Colorful elements moving in random directions.
 - **Chapter 3:** Cellular Automata.
   - **Figure 3.1:** Pattern emerging from single active pixel, defined by a random number between 0 and 255.
-  - **Figure 3.2:** As above, only from a random string of active pixels. (TODO)
+  - **Figure 3.2:** As above, only from a random string of active pixels.
 - **Chapter 4:** Visualizing external data.
   - **Figure 4.1:** Interactive line chart showing population changes in Norway over the last ~30 years.
 - **Chapter 5:** Particles from mouse movement.
   - **Figure 5.1:** Expanding particles. 
+  - **Figure 5.2:** Particles with different lifespans.
+  - **Figure 5.3:** Heatfield based on mouse position. (TODO)
