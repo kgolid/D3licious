@@ -1,4 +1,4 @@
-var chapters = require('./chapters.js');
+var chapter_base = require('./chapter_base.js');
 
 var main = document.querySelector('.main');
 var leftHead = document.querySelector('.left-head');
