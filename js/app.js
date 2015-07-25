@@ -1,5 +1,4 @@
 var chapter_base = require('./chapter_base.js');
-
 var menu_module = require('./menu.js');
 var chapter_module = require('./chapter.js');
 
@@ -61,9 +60,9 @@ var app = {
     this.setState('main');
     this.render();
   },
-  handleMenuItemClick: function (chapter) {
+  handleMenuItemClick: function (target) {
     this.setState('chapter');
-    this.setChapter(chapter);
+    this.setChapter(target);
     this.render();
   }
 }

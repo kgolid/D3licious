@@ -10,8 +10,8 @@ var menu = {
     this.items = app.database;
   },
   render: function () {
-    var menu = this.templates.container.content.cloneNode(true);
-    this.app.main.appendChild(menu);
+    var container = this.templates.container.content.cloneNode(true);
+    this.app.main.appendChild(container);
 
     for (var i in this.items) {
       this.renderItem(this.items[i]);
