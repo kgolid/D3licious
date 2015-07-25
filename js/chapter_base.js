@@ -8,6 +8,7 @@ var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
+var fig6_1 = require('./figures/fig6-1.js');
 
 module.exports = [
   {
@@ -92,6 +93,18 @@ module.exports = [
         id: 2,
         description: "Particles with random lifespans",
         script: fig5_2
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "Moving Particles",
+    date: "2015-07-25",
+    figures: [
+      {
+        id: 1,
+        description: "Particles with velocity.",
+        script: fig6_1
       }
     ]
   }

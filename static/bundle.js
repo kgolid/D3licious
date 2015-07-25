@@ -1,6 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var chapter_base = require('./chapter_base.js');
-
 var menu_module = require('./menu.js');
 var chapter_module = require('./chapter.js');
 
@@ -62,16 +61,16 @@ var app = {
     this.setState('main');
     this.render();
   },
-  handleMenuItemClick: function (chapter) {
+  handleMenuItemClick: function (target) {
     this.setState('chapter');
-    this.setChapter(chapter);
+    this.setChapter(target);
     this.render();
   }
 }
 
 app.init();
 
-},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":14}],2:[function(require,module,exports){
+},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":15}],2:[function(require,module,exports){
 var chapter = {
   app: null,
   chapter: null,
@@ -116,6 +115,7 @@ var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
+var fig6_1 = require('./figures/fig6-1.js');
 
 module.exports = [
   {
@@ -202,10 +202,22 @@ module.exports = [
         script: fig5_2
       }
     ]
+  },
+  {
+    id: 6,
+    name: "Moving Particles",
+    date: "2015-07-25",
+    figures: [
+      {
+        id: 1,
+        description: "Particles with velocity.",
+        script: fig6_1
+      }
+    ]
   }
 ];
 
-},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13}],4:[function(require,module,exports){
+},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13,"./figures/fig6-1.js":14}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -224,7 +236,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":15}],5:[function(require,module,exports){
+},{"d3":16}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -244,7 +256,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":15}],6:[function(require,module,exports){
+},{"d3":16}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -313,7 +325,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":15}],7:[function(require,module,exports){
+},{"d3":16}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -394,7 +406,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":15}],8:[function(require,module,exports){
+},{"d3":16}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -456,7 +468,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":15}],9:[function(require,module,exports){
+},{"d3":16}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -548,7 +560,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":15}],10:[function(require,module,exports){
+},{"d3":16}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -640,7 +652,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":15}],11:[function(require,module,exports){
+},{"d3":16}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -753,7 +765,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":15}],12:[function(require,module,exports){
+},{"d3":16}],12:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -803,7 +815,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":15}],13:[function(require,module,exports){
+},{"d3":16}],13:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -853,7 +865,82 @@ module.exports = {
   run: run
 }
 
-},{"d3":15}],14:[function(require,module,exports){
+},{"d3":16}],14:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var nodes = [];
+var lifespan = 400;
+var dim = 15;
+
+var svg;
+
+var mouse;
+
+function addParticles() {
+  mouse = mouse || d3.mouse(this);
+  var px = mouse[0];
+  var py = mouse[1];
+  mouse = d3.mouse(this);
+  var vx = (mouse[0]-px) / 5;
+  var vy = (mouse[1]-py) / 5;
+  var node = {
+    x: mouse[0],
+    y: mouse[1],
+    vx: vx,
+    vy: vy,
+    age: 0,
+    lifespan: Math.random()*lifespan}
+  nodes.push(node);
+}
+
+function setup() {
+  svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
+  svg.on('mousemove', addParticles);
+}
+
+function update() {
+  updateAge();
+  updatePosition();
+}
+
+function updateAge() {
+  nodes = nodes.filter( function (p) {
+    return p.age++ < p.lifespan;
+  });
+}
+
+function updatePosition() {
+  nodes.forEach( function (node) {
+    node.x += node.vx;
+    node.y += node.vy;
+  });
+}
+
+function display() {
+  var particles = svg.selectAll('circle').data(nodes);
+  particles.enter().append('circle').attr('class', 'particle');
+  particles.attr('r', function (d) {return Math.max(0, dim - dim*(d.age / d.lifespan))})
+    .attr('cx', function (d) { return d.x; })
+    .attr('cy', function (d) { return d.y; });
+  particles.exit().remove();
+}
+
+function run() {
+  setup();
+  d3.timer(function () {
+    update();
+    display();
+  });
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":16}],15:[function(require,module,exports){
 var menu = {
   app: null,
   items: null,
@@ -866,8 +953,8 @@ var menu = {
     this.items = app.database;
   },
   render: function () {
-    var menu = this.templates.container.content.cloneNode(true);
-    this.app.main.appendChild(menu);
+    var container = this.templates.container.content.cloneNode(true);
+    this.app.main.appendChild(container);
 
     for (var i in this.items) {
       this.renderItem(this.items[i]);
@@ -889,7 +976,7 @@ var menu = {
 
 module.exports = menu;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
