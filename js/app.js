@@ -1,69 +1,71 @@
-var chapters = require('./chapters.js');
+var chapter_base = require('./chapter_base.js');
 
-var main = document.querySelector('.main');
-var leftHead = document.querySelector('.left-head');
-var rightHead = document.querySelector('.right-head');
+var menu_module = require('./menu.js');
+var chapter_module = require('./chapter.js');
 
-var loadMainPage = function () {
-  // Load menu
-  var menu = document.querySelector('#menu').content.cloneNode(true);
-  main.appendChild(menu);
+var app = {
+  state: 'init',
+  chapter: null,
+  database: chapter_base,
+  modules: {
+    menu: menu_module,
+    chapter: chapter_module,
+  },
+  init: function () {
+    this.cacheDom();
+    this.modules.menu.init(this);
+    this.modules.chapter.init(this);
+    this.render();
+  },
+  cacheDom: function () {
+    this.main = document.querySelector('.main');
+    this.leftHead = document.querySelector('.left-head');
+    this.rightHead = document.querySelector('.right-head');
+  },
+  setState: function (state) {
+    this.state = state;
+  },
+  setChapter: function (chapter) {
+    this.chapter = chapter;
+  },
+  render: function () {
+    switch (this.state) {
+      case 'init':
+        this.modules.menu.render();
+        break;
+      case 'main':
+        this.prepareMainPage();
+        this.modules.menu.render();
+        break;
+      case 'chapter':
+        this.prepareChapterPage();
+        this.modules.chapter.setChapter(this.chapter);
+        this.modules.chapter.render();
+        break;
+      default:
+    }
+  },
+  prepareChapterPage: function () {
+    this.leftHead.onclick = this.handleHeaderClick.bind(this);
+    this.rightHead.innerText = this.chapter.name;
 
-  // Load menu items
-  for (var i = 0; i < chapters.length; i++) {
-    var menuItem = document.querySelector('#menu-item').content.cloneNode(true);
-    menuItem.querySelector('.menu-item').innerText = chapters[i].name;
-    menuItem.querySelector('.menu-item').onclick = createClickHandler(chapters[i]);
-    document.querySelector('.menu').appendChild(menuItem);
+    this.main.removeChild(document.querySelector('.menu'));
+  },
+  prepareMainPage: function () {
+    this.leftHead.onclick = null;
+    this.rightHead.innerText = "";
+
+    this.main.removeChild(document.querySelector('.chapter'));
+  },
+  handleHeaderClick: function () {
+    this.setState('main');
+    this.render();
+  },
+  handleMenuItemClick: function (chapter) {
+    this.setState('chapter');
+    this.setChapter(chapter);
+    this.render();
   }
 }
 
-var loadChapter = function (chap) {
-  // Set chapter name in header
-  leftHead.onclick = handleHeaderClick;
-  rightHead.innerText = chap.name;
-
-  // Remove menu
-  main.removeChild(document.querySelector('.menu'));
-
-  // Load chapter container
-  var chapter = document.querySelector('#chapter').content.cloneNode(true);
-  main.appendChild(chapter);
-
-  // Load figure containers
-  for (var i = 0; i < chap.figures.length; i++) {
-    var figure = document.querySelector('#figure').content.cloneNode(true);
-    figure.querySelector('.description').innerText = chap.figures[i].description;
-    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + chap.figures[i].id);
-    document.querySelector('.chapter').appendChild(figure);
-  }
-
-  // Run figure scripts
-  run_scripts(chap);
-}
-
-var prepareMainPage = function () {
-  // Reset header
-  leftHead.onclick = null;
-  rightHead.innerText = "";
-
-  // Remove chapter container
-  main.removeChild(document.querySelector('.chapter'));
-}
-
-var handleHeaderClick = function () {
-  prepareMainPage();
-  loadMainPage();
-}
-
-var run_scripts = function (chap) {
-  for (var i = 0; i < chap.figures.length; i++) {
-    chap.figures[i].script.run();
-  }
-}
-
-var createClickHandler = function (arg) {
-  return function () { loadChapter(arg) }
-}
-
-loadMainPage();
+app.init();

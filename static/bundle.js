@@ -1,75 +1,111 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var chapters = require('./chapters.js');
+var chapter_base = require('./chapter_base.js');
 
-var main = document.querySelector('.main');
-var leftHead = document.querySelector('.left-head');
-var rightHead = document.querySelector('.right-head');
+var menu_module = require('./menu.js');
+var chapter_module = require('./chapter.js');
 
-var loadMainPage = function () {
-  // Load menu
-  var menu = document.querySelector('#menu').content.cloneNode(true);
-  main.appendChild(menu);
+var app = {
+  state: 'init',
+  chapter: null,
+  database: chapter_base,
+  modules: {
+    menu: menu_module,
+    chapter: chapter_module,
+  },
+  init: function () {
+    this.cacheDom();
+    this.modules.menu.init(this);
+    this.modules.chapter.init(this);
+    this.render();
+  },
+  cacheDom: function () {
+    this.main = document.querySelector('.main');
+    this.leftHead = document.querySelector('.left-head');
+    this.rightHead = document.querySelector('.right-head');
+  },
+  setState: function (state) {
+    this.state = state;
+  },
+  setChapter: function (chapter) {
+    this.chapter = chapter;
+  },
+  render: function () {
+    switch (this.state) {
+      case 'init':
+        this.modules.menu.render();
+        break;
+      case 'main':
+        this.prepareMainPage();
+        this.modules.menu.render();
+        break;
+      case 'chapter':
+        this.prepareChapterPage();
+        this.modules.chapter.setChapter(this.chapter);
+        this.modules.chapter.render();
+        break;
+      default:
+    }
+  },
+  prepareChapterPage: function () {
+    this.leftHead.onclick = this.handleHeaderClick.bind(this);
+    this.rightHead.innerText = this.chapter.name;
 
-  // Load menu items
-  for (var i = 0; i < chapters.length; i++) {
-    var menuItem = document.querySelector('#menu-item').content.cloneNode(true);
-    menuItem.querySelector('.menu-item').innerText = chapters[i].name;
-    menuItem.querySelector('.menu-item').onclick = createClickHandler(chapters[i]);
-    document.querySelector('.menu').appendChild(menuItem);
+    this.main.removeChild(document.querySelector('.menu'));
+  },
+  prepareMainPage: function () {
+    this.leftHead.onclick = null;
+    this.rightHead.innerText = "";
+
+    this.main.removeChild(document.querySelector('.chapter'));
+  },
+  handleHeaderClick: function () {
+    this.setState('main');
+    this.render();
+  },
+  handleMenuItemClick: function (chapter) {
+    this.setState('chapter');
+    this.setChapter(chapter);
+    this.render();
   }
 }
 
-var loadChapter = function (chap) {
-  // Set chapter name in header
-  leftHead.onclick = handleHeaderClick;
-  rightHead.innerText = chap.name;
+app.init();
 
-  // Remove menu
-  main.removeChild(document.querySelector('.menu'));
+},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":14}],2:[function(require,module,exports){
+var chapter = {
+  app: null,
+  chapter: null,
+  templates: {
+    container: document.querySelector('#chapter-template'),
+    figure: document.querySelector('#figure-template')
+  },
+  init: function (app) {
+    this.app = app;
+  },
+  setChapter: function (chapter) {
+    this.chapter = chapter;
+  },
+  render: function () {
+    var container = this.templates.container.content.cloneNode(true);
+    this.app.main.appendChild(container);
 
-  // Load chapter container
-  var chapter = document.querySelector('#chapter').content.cloneNode(true);
-  main.appendChild(chapter);
+    for (var i in this.chapter.figures) {
+      this.renderFigure(this.chapter.figures[i]);
+    }
+  },
+  renderFigure: function (figure) {
+    var el = this.templates.figure.content.cloneNode(true);
+    el.querySelector('.description').innerText = figure.description;
+    el.querySelector('.figure').classList.add('fig' + this.chapter.id + '-' + figure.id);
+    document.querySelector('.chapter').appendChild(el);
 
-  // Load figure containers
-  for (var i = 0; i < chap.figures.length; i++) {
-    var figure = document.querySelector('#figure').content.cloneNode(true);
-    figure.querySelector('.description').innerText = chap.figures[i].description;
-    figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + chap.figures[i].id);
-    document.querySelector('.chapter').appendChild(figure);
-  }
-
-  // Run figure scripts
-  run_scripts(chap);
-}
-
-var prepareMainPage = function () {
-  // Reset header
-  leftHead.onclick = null;
-  rightHead.innerText = "";
-
-  // Remove chapter container
-  main.removeChild(document.querySelector('.chapter'));
-}
-
-var handleHeaderClick = function () {
-  prepareMainPage();
-  loadMainPage();
-}
-
-var run_scripts = function (chap) {
-  for (var i = 0; i < chap.figures.length; i++) {
-    chap.figures[i].script.run();
+    figure.script.run();
   }
 }
 
-var createClickHandler = function (arg) {
-  return function () { loadChapter(arg) }
-}
+module.exports = chapter;
 
-loadMainPage();
-
-},{"./chapters.js":2}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var fig1_1 = require('./figures/fig1-1.js');
 var fig1_2 = require('./figures/fig1-2.js');
 var fig1_3 = require('./figures/fig1-3.js');
@@ -169,7 +205,7 @@ module.exports = [
   }
 ];
 
-},{"./figures/fig1-1.js":3,"./figures/fig1-2.js":4,"./figures/fig1-3.js":5,"./figures/fig1-4.js":6,"./figures/fig2-1.js":7,"./figures/fig3-1.js":8,"./figures/fig3-2.js":9,"./figures/fig4-1.js":10,"./figures/fig5-1.js":11,"./figures/fig5-2.js":12}],3:[function(require,module,exports){
+},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -188,7 +224,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":13}],4:[function(require,module,exports){
+},{"d3":15}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -208,7 +244,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":13}],5:[function(require,module,exports){
+},{"d3":15}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -277,7 +313,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":13}],6:[function(require,module,exports){
+},{"d3":15}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -358,7 +394,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":13}],7:[function(require,module,exports){
+},{"d3":15}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -420,7 +456,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":13}],8:[function(require,module,exports){
+},{"d3":15}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -512,7 +548,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":13}],9:[function(require,module,exports){
+},{"d3":15}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -604,7 +640,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":13}],10:[function(require,module,exports){
+},{"d3":15}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -717,7 +753,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":13}],11:[function(require,module,exports){
+},{"d3":15}],12:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -767,7 +803,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":13}],12:[function(require,module,exports){
+},{"d3":15}],13:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -817,7 +853,43 @@ module.exports = {
   run: run
 }
 
-},{"d3":13}],13:[function(require,module,exports){
+},{"d3":15}],14:[function(require,module,exports){
+var menu = {
+  app: null,
+  items: null,
+  templates: {
+    container: document.querySelector('#menu-template'),
+    item: document.querySelector('#menu-item-template')
+  },
+  init: function (app) {
+    this.app = app;
+    this.items = app.database;
+  },
+  render: function () {
+    var menu = this.templates.container.content.cloneNode(true);
+    this.app.main.appendChild(menu);
+
+    for (var i in this.items) {
+      this.renderItem(this.items[i]);
+    }
+  },
+  renderItem: function (item) {
+    var el = this.templates.item.content.cloneNode(true);
+    el.querySelector('.menu-item').innerText = item.name;
+    el.querySelector('.menu-item').onclick = this.createClickHandler(item);
+    document.querySelector('.menu').appendChild(el);
+  },
+  createClickHandler: function (item) {
+    var app = this.app;
+    return function () {
+      app.handleMenuItemClick(item);
+    }
+  }
+}
+
+module.exports = menu;
+
+},{}],15:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
