@@ -6,12 +6,12 @@ var rightHead = document.querySelector('.right-head');
 
 var loadMainPage = function () {
   // Load menu
-  var menu = document.querySelector('#menu').content.cloneNode(true);
+  var menu = document.querySelector('#menu-template').content.cloneNode(true);
   main.appendChild(menu);
 
   // Load menu items
   for (var i = 0; i < chapters.length; i++) {
-    var menuItem = document.querySelector('#menu-item').content.cloneNode(true);
+    var menuItem = document.querySelector('#menu-item-template').content.cloneNode(true);
     menuItem.querySelector('.menu-item').innerText = chapters[i].name;
     menuItem.querySelector('.menu-item').onclick = createClickHandler(chapters[i]);
     document.querySelector('.menu').appendChild(menuItem);
@@ -27,12 +27,12 @@ var loadChapter = function (chap) {
   main.removeChild(document.querySelector('.menu'));
 
   // Load chapter container
-  var chapter = document.querySelector('#chapter').content.cloneNode(true);
+  var chapter = document.querySelector('#chapter-template').content.cloneNode(true);
   main.appendChild(chapter);
 
   // Load figure containers
   for (var i = 0; i < chap.figures.length; i++) {
-    var figure = document.querySelector('#figure').content.cloneNode(true);
+    var figure = document.querySelector('#figure-template').content.cloneNode(true);
     figure.querySelector('.description').innerText = chap.figures[i].description;
     figure.querySelector('.figure').classList.add('fig' + chap.id + '-' + chap.figures[i].id);
     document.querySelector('.chapter').appendChild(figure);
