@@ -3,6 +3,7 @@ Improvements and fixes
 - Decide on svg width handling.
 - Fix double home tap.
 - Implement Mustache templating.
+- Add article component to chapters.
 
 Upcoming figures
 - Cellular Automata - IN PROGRESS
