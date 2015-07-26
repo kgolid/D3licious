@@ -8,6 +8,7 @@ var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
+var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
 
 module.exports = [
@@ -81,7 +82,7 @@ module.exports = [
   },
   {
     id: 5,
-    name: "Standstill Particles",
+    name: "Particles",
     date: "2015-07-21",
     figures: [
       {
@@ -93,17 +94,22 @@ module.exports = [
         id: 2,
         description: "Particles with random lifespans",
         script: fig5_2
+      },
+      {
+        id: 3,
+        description: "Particles with velocity from mouse.",
+        script: fig5_3
       }
     ]
   },
   {
     id: 6,
-    name: "Moving Particles",
-    date: "2015-07-25",
+    name: "Genetic Algorithms - step by step",
+    date: "2015-07-26",
     figures: [
       {
         id: 1,
-        description: "Particles with velocity.",
+        description: "From A to B",
         script: fig6_1
       }
     ]
