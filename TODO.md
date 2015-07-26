@@ -15,3 +15,5 @@ Upcoming figures
   - Show all when not hovering
 - Color blend blob
 - Force Layouts
+- AI
+  - Generic algorithms
