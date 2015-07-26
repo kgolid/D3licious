@@ -70,7 +70,7 @@ var app = {
 
 app.init();
 
-},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":15}],2:[function(require,module,exports){
+},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":16}],2:[function(require,module,exports){
 var chapter = {
   app: null,
   chapter: null,
@@ -115,6 +115,7 @@ var fig3_2 = require('./figures/fig3-2.js');
 var fig4_1 = require('./figures/fig4-1.js');
 var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
+var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
 
 module.exports = [
@@ -188,7 +189,7 @@ module.exports = [
   },
   {
     id: 5,
-    name: "Standstill Particles",
+    name: "Particles",
     date: "2015-07-21",
     figures: [
       {
@@ -200,24 +201,29 @@ module.exports = [
         id: 2,
         description: "Particles with random lifespans",
         script: fig5_2
+      },
+      {
+        id: 3,
+        description: "Particles with velocity from mouse.",
+        script: fig5_3
       }
     ]
   },
   {
     id: 6,
-    name: "Moving Particles",
-    date: "2015-07-25",
+    name: "Genetic Algorithms - step by step",
+    date: "2015-07-26",
     figures: [
       {
         id: 1,
-        description: "Particles with velocity.",
+        description: "From A to B",
         script: fig6_1
       }
     ]
   }
 ];
 
-},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13,"./figures/fig6-1.js":14}],4:[function(require,module,exports){
+},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13,"./figures/fig5-3.js":14,"./figures/fig6-1.js":15}],4:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -236,7 +242,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":16}],5:[function(require,module,exports){
+},{"d3":17}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -256,7 +262,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":16}],6:[function(require,module,exports){
+},{"d3":17}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -325,7 +331,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":16}],7:[function(require,module,exports){
+},{"d3":17}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -406,7 +412,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":16}],8:[function(require,module,exports){
+},{"d3":17}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -468,7 +474,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":16}],9:[function(require,module,exports){
+},{"d3":17}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -560,7 +566,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":16}],10:[function(require,module,exports){
+},{"d3":17}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -652,7 +658,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":16}],11:[function(require,module,exports){
+},{"d3":17}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -765,7 +771,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":16}],12:[function(require,module,exports){
+},{"d3":17}],12:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -815,7 +821,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":16}],13:[function(require,module,exports){
+},{"d3":17}],13:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -865,7 +871,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":16}],14:[function(require,module,exports){
+},{"d3":17}],14:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -897,7 +903,7 @@ function addParticles() {
 }
 
 function setup() {
-  svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
+  svg = d3.select('.fig5-3').append('svg').attr('width', w).attr('height', h);
   svg.on('mousemove', addParticles);
 }
 
@@ -940,7 +946,109 @@ module.exports = {
   run: run
 }
 
-},{"d3":16}],15:[function(require,module,exports){
+},{"d3":17}],15:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var start = {
+  x: w/2,
+  y: h/2
+}
+
+var nodes = [];
+var lifespan = 400;
+var dim = 5;
+
+var svg;
+
+function addParticle() {
+  var ax = Math.random() - 0.5;
+  var ay = Math.random() - 0.5;
+  var node = {
+    pos: { x: start.x, y: start.y },
+    vel: { x: 0, y: 0 },
+    acc: { x: ax, y: ay },
+    age: 0
+  }
+  nodes.push(node);
+}
+
+function setup() {
+  svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
+  displayStart();
+  displayFinish();
+  setInterval( function () {
+    addParticle();
+  }, 200);
+}
+
+function update() {
+  updateAge();
+  updatePosition();
+}
+
+function updateAge() {
+  nodes.forEach( function (node) {
+    node.age++;
+  });
+}
+
+function updatePosition() {
+  nodes.forEach( function (node) {
+    node.vel.x += node.acc.x;
+    node.vel.y += node.acc.y;
+    node.pos.x += node.vel.x;
+    node.pos.y += node.vel.y;
+
+    node.acc.x = Math.random() - 0.5;
+    node.acc.y = Math.random() - 0.5;
+  });
+
+  nodes = nodes.filter( function (node) {
+    var outx = node.pos.x < 0 || node.pos.x > w;
+    var outy = node.pos.y < 0 || node.pos.y > h;
+    return !outx && !outy;
+  });
+}
+
+function displayStart() {
+  svg.append('circle')
+    .attr('cx', start.x)
+    .attr('cy', start.y)
+    .attr('r', dim * 2)
+    .attr('stroke', 'gold')
+    .attr('fill', 'none')
+    .attr('class', 'start');
+}
+
+function displayFinish() {
+
+}
+
+function display() {
+  var particles = svg.selectAll('.particle').data(nodes);
+  particles.enter().append('circle').attr('class', 'particle').attr('r', dim);
+  particles.attr('cx', function (d) { return d.pos.x; })
+    .attr('cy', function (d) { return d.pos.y; });
+  particles.exit().remove();
+}
+
+function run() {
+  setup();
+  d3.timer(function () {
+    console.log(nodes.length);
+    update();
+    display();
+  });
+}
+
+module.exports = {
+  run: run
+}
+
+},{"d3":17}],16:[function(require,module,exports){
 var menu = {
   app: null,
   items: null,
@@ -976,7 +1084,7 @@ var menu = {
 
 module.exports = menu;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
