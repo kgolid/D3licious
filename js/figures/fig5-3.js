@@ -29,7 +29,7 @@ function addParticles() {
 }
 
 function setup() {
-  svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
+  svg = d3.select('.fig5-3').append('svg').attr('width', w).attr('height', h);
   svg.on('mousemove', addParticles);
 }
 
