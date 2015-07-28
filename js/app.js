@@ -57,6 +57,11 @@ var app = {
     this.main.removeChild(document.querySelector('.chapter'));
   },
   handleHeaderClick: function () {
+    for (var i in this.chapter.figures) {
+      if (this.chapter.figures[i].script.stop) {
+        this.chapter.figures[i].script.stop();
+      }
+    }
     this.setState('main');
     this.render();
   },
