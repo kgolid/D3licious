@@ -3,16 +3,16 @@ var d3 = require('d3');
 var w = 900;
 var h = 450;
 
-var start = {
-  x: w/2,
-  y: h/2
-}
+var start = { x: w/2, y: h/2 }
 
 var nodes = [];
 var lifespan = 400;
 var dim = 5;
 
 var svg;
+
+var interval;
+var stopped;
 
 function addParticle() {
   var ax = Math.random() - 0.5;
@@ -30,9 +30,10 @@ function setup() {
   svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
   displayStart();
   displayFinish();
-  setInterval( function () {
+  interval = setInterval( function () {
     addParticle();
   }, 200);
+  stopped = false;
 }
 
 function update() {
@@ -89,11 +90,20 @@ function display() {
 function run() {
   setup();
   d3.timer(function () {
+    console.log('running');
     update();
     display();
+    return stopped;
   });
 }
 
+function stop() {
+  clearInterval(interval);
+  nodes = [];
+  stopped = true;
+}
+
 module.exports = {
-  run: run
+  run: run,
+  stop: stop
 }
