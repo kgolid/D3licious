@@ -90,7 +90,6 @@ function display() {
 function run() {
   setup();
   d3.timer(function () {
-    console.log('running');
     update();
     display();
     return stopped;
