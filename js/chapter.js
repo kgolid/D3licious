@@ -26,6 +26,16 @@ var chapter = {
     document.querySelector('.chapter').appendChild(el);
 
     figure.script.run();
+  },
+  stop: function () {
+    for (var i in this.chapter.figures) {
+      this.stopFigure(this.chapter.figures[i]);
+    }
+  },
+  stopFigure: function (figure) {
+    if(figure.script.stop){
+      figure.script.stop();
+    }
   }
 }
 
