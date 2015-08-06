@@ -10,6 +10,9 @@ var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
 var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
+var fig6_2 = require('./figures/fig6-2.js');
+
+var art6 = require('./articles/art6.js');
 
 module.exports = [
   {
@@ -109,8 +112,13 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "From A to B",
+        description: "Random movement from center",
         script: fig6_1
+      },
+      {
+        id: 2,
+        description: "Random movement from center",
+        script: fig6_2
       }
     ]
   }
