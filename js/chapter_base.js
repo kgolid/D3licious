@@ -120,6 +120,12 @@ module.exports = [
         description: "Random movement from center",
         script: fig6_2
       }
+    ],
+    articles: [
+      {
+        id: 1,
+        body: art6.intro
+      }
     ]
   }
 ];
