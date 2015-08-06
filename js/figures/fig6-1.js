@@ -6,7 +6,6 @@ var h = 450;
 var start = { x: w/2, y: h/2 }
 
 var nodes = [];
-var lifespan = 400;
 var dim = 5;
 
 var svg;
