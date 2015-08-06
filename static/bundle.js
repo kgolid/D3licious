@@ -58,6 +58,7 @@ var app = {
     this.main.removeChild(document.querySelector('.chapter'));
   },
   handleHeaderClick: function () {
+    this.modules.chapter.stop();
     this.setState('main');
     this.render();
   },
@@ -70,7 +71,10 @@ var app = {
 
 app.init();
 
-},{"./chapter.js":2,"./chapter_base.js":3,"./menu.js":16}],2:[function(require,module,exports){
+},{"./chapter.js":3,"./chapter_base.js":4,"./menu.js":18}],2:[function(require,module,exports){
+var intro = "";
+
+},{}],3:[function(require,module,exports){
 var chapter = {
   app: null,
   chapter: null,
@@ -99,12 +103,22 @@ var chapter = {
     document.querySelector('.chapter').appendChild(el);
 
     figure.script.run();
+  },
+  stop: function () {
+    for (var i in this.chapter.figures) {
+      this.stopFigure(this.chapter.figures[i]);
+    }
+  },
+  stopFigure: function (figure) {
+    if(figure.script.stop){
+      figure.script.stop();
+    }
   }
 }
 
 module.exports = chapter;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var fig1_1 = require('./figures/fig1-1.js');
 var fig1_2 = require('./figures/fig1-2.js');
 var fig1_3 = require('./figures/fig1-3.js');
@@ -117,6 +131,9 @@ var fig5_1 = require('./figures/fig5-1.js');
 var fig5_2 = require('./figures/fig5-2.js');
 var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
+var fig6_2 = require('./figures/fig6-2.js');
+
+var art6 = require('./articles/art6.js');
 
 module.exports = [
   {
@@ -216,14 +233,25 @@ module.exports = [
     figures: [
       {
         id: 1,
-        description: "From A to B",
+        description: "Random movement from center",
         script: fig6_1
+      },
+      {
+        id: 2,
+        description: "Random movement from center",
+        script: fig6_2
+      }
+    ],
+    articles: [
+      {
+        id: 1,
+        body: art6.intro
       }
     ]
   }
 ];
 
-},{"./figures/fig1-1.js":4,"./figures/fig1-2.js":5,"./figures/fig1-3.js":6,"./figures/fig1-4.js":7,"./figures/fig2-1.js":8,"./figures/fig3-1.js":9,"./figures/fig3-2.js":10,"./figures/fig4-1.js":11,"./figures/fig5-1.js":12,"./figures/fig5-2.js":13,"./figures/fig5-3.js":14,"./figures/fig6-1.js":15}],4:[function(require,module,exports){
+},{"./articles/art6.js":2,"./figures/fig1-1.js":5,"./figures/fig1-2.js":6,"./figures/fig1-3.js":7,"./figures/fig1-4.js":8,"./figures/fig2-1.js":9,"./figures/fig3-1.js":10,"./figures/fig3-2.js":11,"./figures/fig4-1.js":12,"./figures/fig5-1.js":13,"./figures/fig5-2.js":14,"./figures/fig5-3.js":15,"./figures/fig6-1.js":16,"./figures/fig6-2.js":17}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -242,7 +270,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":17}],5:[function(require,module,exports){
+},{"d3":19}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -262,7 +290,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":17}],6:[function(require,module,exports){
+},{"d3":19}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -331,7 +359,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":17}],7:[function(require,module,exports){
+},{"d3":19}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -412,7 +440,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":17}],8:[function(require,module,exports){
+},{"d3":19}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -474,7 +502,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":17}],9:[function(require,module,exports){
+},{"d3":19}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -566,7 +594,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":17}],10:[function(require,module,exports){
+},{"d3":19}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -658,7 +686,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":17}],11:[function(require,module,exports){
+},{"d3":19}],12:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -771,7 +799,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":17}],12:[function(require,module,exports){
+},{"d3":19}],13:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -821,7 +849,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":17}],13:[function(require,module,exports){
+},{"d3":19}],14:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -871,7 +899,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":17}],14:[function(require,module,exports){
+},{"d3":19}],15:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -946,22 +974,21 @@ module.exports = {
   run: run
 }
 
-},{"d3":17}],15:[function(require,module,exports){
+},{"d3":19}],16:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
 var h = 450;
 
-var start = {
-  x: w/2,
-  y: h/2
-}
+var start = { x: w/2, y: h/2 }
 
 var nodes = [];
-var lifespan = 400;
 var dim = 5;
 
 var svg;
+
+var interval;
+var stopped;
 
 function addParticle() {
   var ax = Math.random() - 0.5;
@@ -978,10 +1005,10 @@ function addParticle() {
 function setup() {
   svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
   displayStart();
-  displayFinish();
-  setInterval( function () {
+  interval = setInterval( function () {
     addParticle();
   }, 200);
+  stopped = false;
 }
 
 function update() {
@@ -1023,13 +1050,11 @@ function displayStart() {
     .attr('class', 'start');
 }
 
-function displayFinish() {
-
-}
-
-function display() {
+function displayParticles() {
   var particles = svg.selectAll('.particle').data(nodes);
-  particles.enter().append('circle').attr('class', 'particle').attr('r', dim);
+  particles.enter().append('circle')
+    .attr('class', 'particle')
+    .attr('r', dim)
   particles.attr('cx', function (d) { return d.pos.x; })
     .attr('cy', function (d) { return d.pos.y; });
   particles.exit().remove();
@@ -1038,17 +1063,155 @@ function display() {
 function run() {
   setup();
   d3.timer(function () {
-    console.log(nodes.length);
     update();
-    display();
+    displayParticles();
+    return stopped;
   });
 }
 
-module.exports = {
-  run: run
+function stop() {
+  clearInterval(interval);
+  nodes = [];
+  stopped = true;
 }
 
-},{"d3":17}],16:[function(require,module,exports){
+module.exports = {
+  run: run,
+  stop: stop
+}
+
+},{"d3":19}],17:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var start = { x: w/2, y: h/2 }
+
+var nodes = [];
+var log = [];
+var age = 0;
+var dim = 5;
+
+var svg;
+
+var interval;
+var stopped;
+
+function addParticle() {
+  var ax = Math.random() - 0.5;
+  var ay = Math.random() - 0.5;
+  var node = {
+    pos: { x: start.x, y: start.y },
+    vel: { x: 0, y: 0 },
+    acc: { x: ax, y: ay },
+    age: 0
+  }
+  nodes.push(node);
+}
+
+function addParticles() {
+  for (var i = 0; i < 20; i++) {
+    addParticle();
+  }
+}
+
+function setup() {
+  svg = d3.select('.fig6-2').append('svg').attr('width', w).attr('height', h);
+  displayStart();
+  addParticles();
+  stopped = false;
+}
+
+function update() {
+  updateAge();
+  updatePosition();
+  if (nodes.length === 0) {
+    makeNewGeneration();
+  };
+}
+
+function updateAge() {
+  log[0] = age++;
+}
+
+function updatePosition() {
+  nodes.forEach( function (node) {
+    node.vel.x += node.acc.x;
+    node.vel.y += node.acc.y;
+    node.pos.x += node.vel.x;
+    node.pos.y += node.vel.y;
+
+    node.acc.x = Math.random() - 0.5;
+    node.acc.y = Math.random() - 0.5;
+  });
+
+  nodes = nodes.filter( function (node) {
+    var outx = node.pos.x < 0 || node.pos.x > w;
+    var outy = node.pos.y < 0 || node.pos.y > h;
+    return !outx && !outy;
+  });
+}
+
+function makeNewGeneration() {
+  log.splice(1,0,age);
+  addParticles();
+  age = 0;
+}
+
+function displayStart() {
+  svg.append('circle')
+    .attr('cx', start.x)
+    .attr('cy', start.y)
+    .attr('r', dim * 2)
+    .attr('stroke', '#f00')
+    .attr('fill', 'none')
+    .attr('class', 'start');
+}
+
+function displayParticles() {
+  var particles = svg.selectAll('.particle').data(nodes);
+  particles.enter().append('circle')
+    .attr('class', 'particle')
+    .attr('r', dim)
+  particles.attr('cx', function (d) { return d.pos.x; })
+    .attr('cy', function (d) { return d.pos.y; });
+  particles.exit().remove();
+}
+
+function displayStats() {
+  var bars = svg.selectAll('.bar').data(log);
+  bars.enter().append('rect')
+    .attr('class', 'bar')
+    .attr('height', 10)
+    .attr('x', 10)
+    .attr('fill', function (d,i) { return (i === 0)? '#f00':'#ddd' });
+  bars.attr('width', function (d) { return d / 5; })
+    .attr('y', function (d,i) { return i *12; });
+}
+
+function run() {
+  setup();
+  d3.timer(function () {
+    update();
+    displayStats();
+    displayParticles();
+    return stopped;
+  });
+}
+
+function stop() {
+  clearInterval(interval);
+  nodes = [];
+  stopped = true;
+}
+
+module.exports = {
+  run: run,
+  stop: stop
+}
+
+},{"d3":19}],18:[function(require,module,exports){
 var menu = {
   app: null,
   items: null,
@@ -1084,7 +1247,7 @@ var menu = {
 
 module.exports = menu;
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
