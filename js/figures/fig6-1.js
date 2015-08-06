@@ -29,7 +29,6 @@ function addParticle() {
 function setup() {
   svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
   displayStart();
-  displayFinish();
   interval = setInterval( function () {
     addParticle();
   }, 200);
@@ -75,13 +74,11 @@ function displayStart() {
     .attr('class', 'start');
 }
 
-function displayFinish() {
-
-}
-
-function display() {
+function displayParticles() {
   var particles = svg.selectAll('.particle').data(nodes);
-  particles.enter().append('circle').attr('class', 'particle').attr('r', dim);
+  particles.enter().append('circle')
+    .attr('class', 'particle')
+    .attr('r', dim)
   particles.attr('cx', function (d) { return d.pos.x; })
     .attr('cy', function (d) { return d.pos.y; });
   particles.exit().remove();
@@ -91,7 +88,7 @@ function run() {
   setup();
   d3.timer(function () {
     update();
-    display();
+    displayParticles();
     return stopped;
   });
 }
