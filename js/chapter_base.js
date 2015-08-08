@@ -11,6 +11,7 @@ var fig5_2 = require('./figures/fig5-2.js');
 var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
 var fig6_2 = require('./figures/fig6-2.js');
+var fig7_1 = require('./figures/fig7-1.js');
 
 var art6 = require('./articles/art6.js');
 
@@ -125,6 +126,18 @@ module.exports = [
       {
         id: 1,
         body: art6.intro
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: "Imperfect Circles",
+    date: "2017-08-06",
+    figures: [
+      {
+        id: 1,
+        description: "Arranging points in a circle",
+        script: fig7_1
       }
     ]
   }
