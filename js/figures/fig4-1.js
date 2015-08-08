@@ -35,14 +35,14 @@ var type = function (d) {
 };
 
 var draw = function (data) {
-  svg.selectAll(".line").remove();
+  var path = svg.selectAll(".line").data([data]);
 
-  var path = svg.append("path").datum(data);
-  path.attr("class", "line")
-      .attr("d", line)
-      .attr("stroke", function (d) {
-        return tScale(d[0][tColumn]);
-      });
+  path.enter().append('path').attr("class", "line");
+  path.transition()
+    .attr("d", line)
+    .attr("stroke", function (d) {
+      return tScale(d[0][tColumn]);
+    });
 };
 
 var run = function () {
