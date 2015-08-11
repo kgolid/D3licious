@@ -68,8 +68,6 @@ function displayStart() {
     .attr('cx', start.x)
     .attr('cy', start.y)
     .attr('r', dim * 2)
-    .attr('stroke', 'gold')
-    .attr('fill', 'none')
     .attr('class', 'start');
 }
 
