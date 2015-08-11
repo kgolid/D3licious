@@ -9,7 +9,7 @@ var generation_size = 20;
 var nodes = [];
 var log = [];
 var age = 0;
-var dim = 5;
+var dim = 3;
 
 var svg;
 
@@ -82,8 +82,6 @@ function displayStart() {
     .attr('cx', start.x)
     .attr('cy', start.y)
     .attr('r', dim * 2)
-    .attr('stroke', '#f00')
-    .attr('fill', 'none')
     .attr('class', 'start');
 }
 
@@ -101,11 +99,11 @@ function displayStats() {
   var bars = svg.selectAll('.bar').data(log);
   bars.enter().append('rect')
     .attr('class', 'bar')
-    .attr('height', 10)
+    .attr('height', 6)
     .attr('x', 10)
     .attr('fill', function (d,i) { return (i === 0)? '#f00':'#ddd' });
   bars.attr('width', function (d) { return d / 5; })
-    .attr('y', function (d,i) { return i *12; });
+    .attr('y', function (d,i) { return i *7; });
 }
 
 function run() {
