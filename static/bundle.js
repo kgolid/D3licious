@@ -71,7 +71,7 @@ var app = {
 
 app.init();
 
-},{"./chapter.js":3,"./chapter_base.js":4,"./menu.js":18}],2:[function(require,module,exports){
+},{"./chapter.js":3,"./chapter_base.js":4,"./menu.js":20}],2:[function(require,module,exports){
 var intro = "";
 
 },{}],3:[function(require,module,exports){
@@ -132,6 +132,8 @@ var fig5_2 = require('./figures/fig5-2.js');
 var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
 var fig6_2 = require('./figures/fig6-2.js');
+var fig6_3 = require('./figures/fig6-3.js');
+var fig7_1 = require('./figures/fig7-1.js');
 
 var art6 = require('./articles/art6.js');
 
@@ -240,6 +242,11 @@ module.exports = [
         id: 2,
         description: "Random movement from center",
         script: fig6_2
+      },
+      {
+        id: 3,
+        description: "Predefined movement",
+        script: fig6_3
       }
     ],
     articles: [
@@ -248,10 +255,22 @@ module.exports = [
         body: art6.intro
       }
     ]
+  },
+  {
+    id: 7,
+    name: "Imperfect Circles",
+    date: "2017-08-06",
+    figures: [
+      {
+        id: 1,
+        description: "Arranging points in a circle",
+        script: fig7_1
+      }
+    ]
   }
 ];
 
-},{"./articles/art6.js":2,"./figures/fig1-1.js":5,"./figures/fig1-2.js":6,"./figures/fig1-3.js":7,"./figures/fig1-4.js":8,"./figures/fig2-1.js":9,"./figures/fig3-1.js":10,"./figures/fig3-2.js":11,"./figures/fig4-1.js":12,"./figures/fig5-1.js":13,"./figures/fig5-2.js":14,"./figures/fig5-3.js":15,"./figures/fig6-1.js":16,"./figures/fig6-2.js":17}],5:[function(require,module,exports){
+},{"./articles/art6.js":2,"./figures/fig1-1.js":5,"./figures/fig1-2.js":6,"./figures/fig1-3.js":7,"./figures/fig1-4.js":8,"./figures/fig2-1.js":9,"./figures/fig3-1.js":10,"./figures/fig3-2.js":11,"./figures/fig4-1.js":12,"./figures/fig5-1.js":13,"./figures/fig5-2.js":14,"./figures/fig5-3.js":15,"./figures/fig6-1.js":16,"./figures/fig6-2.js":17,"./figures/fig6-3.js":18,"./figures/fig7-1.js":19}],5:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -270,7 +289,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":19}],6:[function(require,module,exports){
+},{"d3":21}],6:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -290,7 +309,7 @@ module.exports.run = function () {
     .attr('class', 'bubble');
 }
 
-},{"d3":19}],7:[function(require,module,exports){
+},{"d3":21}],7:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -359,7 +378,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":19}],8:[function(require,module,exports){
+},{"d3":21}],8:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -440,7 +459,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":19}],9:[function(require,module,exports){
+},{"d3":21}],9:[function(require,module,exports){
 var d3 = require('d3');
 
 module.exports.run = function () {
@@ -502,7 +521,7 @@ module.exports.run = function () {
 
 }
 
-},{"d3":19}],10:[function(require,module,exports){
+},{"d3":21}],10:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -594,7 +613,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":19}],11:[function(require,module,exports){
+},{"d3":21}],11:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900,
@@ -686,7 +705,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":19}],12:[function(require,module,exports){
+},{"d3":21}],12:[function(require,module,exports){
 var d3 = require('d3');
 
 var svg, legend;
@@ -724,14 +743,14 @@ var type = function (d) {
 };
 
 var draw = function (data) {
-  svg.selectAll(".line").remove();
+  var path = svg.selectAll(".line").data([data]);
 
-  var path = svg.append("path").datum(data);
-  path.attr("class", "line")
-      .attr("d", line)
-      .attr("stroke", function (d) {
-        return tScale(d[0][tColumn]);
-      });
+  path.enter().append('path').attr("class", "line");
+  path.transition()
+    .attr("d", line)
+    .attr("stroke", function (d) {
+      return tScale(d[0][tColumn]);
+    });
 };
 
 var run = function () {
@@ -799,7 +818,7 @@ module.exports = {
   run: run
 };
 
-},{"d3":19}],13:[function(require,module,exports){
+},{"d3":21}],13:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -849,7 +868,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":19}],14:[function(require,module,exports){
+},{"d3":21}],14:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -899,7 +918,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":19}],15:[function(require,module,exports){
+},{"d3":21}],15:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -974,7 +993,7 @@ module.exports = {
   run: run
 }
 
-},{"d3":19}],16:[function(require,module,exports){
+},{"d3":21}],16:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -1045,8 +1064,6 @@ function displayStart() {
     .attr('cx', start.x)
     .attr('cy', start.y)
     .attr('r', dim * 2)
-    .attr('stroke', 'gold')
-    .attr('fill', 'none')
     .attr('class', 'start');
 }
 
@@ -1080,7 +1097,7 @@ module.exports = {
   stop: stop
 }
 
-},{"d3":19}],17:[function(require,module,exports){
+},{"d3":21}],17:[function(require,module,exports){
 var d3 = require('d3');
 
 var w = 900;
@@ -1088,10 +1105,11 @@ var h = 450;
 
 var start = { x: w/2, y: h/2 }
 
+var generation_size = 20;
 var nodes = [];
 var log = [];
 var age = 0;
-var dim = 5;
+var dim = 3;
 
 var svg;
 
@@ -1111,7 +1129,7 @@ function addParticle() {
 }
 
 function addParticles() {
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < generation_size; i++) {
     addParticle();
   }
 }
@@ -1164,8 +1182,6 @@ function displayStart() {
     .attr('cx', start.x)
     .attr('cy', start.y)
     .attr('r', dim * 2)
-    .attr('stroke', '#f00')
-    .attr('fill', 'none')
     .attr('class', 'start');
 }
 
@@ -1183,11 +1199,11 @@ function displayStats() {
   var bars = svg.selectAll('.bar').data(log);
   bars.enter().append('rect')
     .attr('class', 'bar')
-    .attr('height', 10)
+    .attr('height', 6)
     .attr('x', 10)
     .attr('fill', function (d,i) { return (i === 0)? '#f00':'#ddd' });
   bars.attr('width', function (d) { return d / 5; })
-    .attr('y', function (d,i) { return i *12; });
+    .attr('y', function (d,i) { return i *7; });
 }
 
 function run() {
@@ -1211,7 +1227,267 @@ module.exports = {
   stop: stop
 }
 
-},{"d3":19}],18:[function(require,module,exports){
+},{"d3":21}],18:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+
+var start = { x: w/5, y: h/2 }
+var finish = { x: (4*w)/5, y: h/2}
+
+var generationSize = 20;
+var nodes = [];
+var lifespan = 20;
+var dim = 3;
+var active = 0;
+
+var svg;
+
+var interval;
+var stopped;
+
+function addParticle(acc) {
+  var node = {
+    pos: { x: start.x, y: start.y },
+    vel: { x: 0, y: 0 },
+    acc: acc,
+    age: 0,
+    status: 'alive'
+  }
+  nodes.push(node);
+}
+
+function addParticles() {
+  for (var i = 0; i < generationSize; i++) {
+    addParticle(generateAccList());
+    active++;
+  }
+};
+
+function generateAccList() {
+  var list = [];
+  for(var i = 0; i < lifespan; i++) {
+    list.push({x: Math.random() - 0.5, y: Math.random() - 0.5});
+  }
+  return list;
+}
+
+function updateAge() {
+  nodes.forEach( function (node) {
+    node.age++;
+  });
+}
+
+function updatePos() {
+  nodes.forEach( function (node) {
+    node.pos.x += node.vel.x;
+    node.pos.y += node.vel.y;
+  });
+}
+
+function updateVel() {
+  nodes.forEach( function (node) {
+    if (node.status === 'alive') {
+      node.vel.x += node.acc[node.age].x;
+      node.vel.y += node.acc[node.age].y;
+    } else {
+      node.vel.x = 0;
+      node.vel.y = 0;
+    }
+  })
+}
+
+function updateStatus() {
+  var outOfBounds = function (node) {
+    var outx = node.pos.x < 0 || node.pos.x > w;
+    var outy = node.pos.y < 0 || node.pos.y > h;
+    return outx || outy;
+  };
+
+  var reachedGoal = function (node) {
+    return false; //TODO
+  };
+
+  nodes.forEach( function (node) {
+    if (node.status === 'alive') {
+      if (outOfBounds(node) || node.age >= lifespan) {
+        node.status = 'dead';
+        active--;
+      } else if ( reachedGoal(node) ) {
+        node.status = 'done';
+        active--;
+      }
+    }
+
+  });
+}
+
+function makeNewGeneration() {
+  active = 0;
+  nodes = [];
+  addParticles();
+}
+
+function displayCheckpoints() {
+  svg.append('circle')
+    .attr('cx', start.x)
+    .attr('cy', start.y)
+    .attr('r', dim * 2)
+    .attr('class', 'start');
+  svg.append('circle')
+    .attr('cx', finish.x)
+    .attr('cy', finish.y)
+    .attr('r', dim * 4)
+    .attr('class', 'finish');
+}
+
+function displayParticles() {
+  var scale = d3.scale.category20();
+  var particles = svg.selectAll('.particle').data(nodes);
+  particles.enter().append('circle')
+    .attr('r', dim)
+    .attr('fill', function (d,i) { return scale(i); })
+  particles
+    .attr('class', function (d) { return 'particle ' + d.status; })
+    .attr('cx', function (d) { return d.pos.x; })
+    .attr('cy', function (d) { return d.pos.y; });
+  particles.exit().remove();
+};
+
+function setup() {
+  svg = d3.select('.fig6-3').append('svg').attr('width', w).attr('height', h);
+  displayCheckpoints();
+  addParticles();
+  stopped = false;
+};
+
+function update() {
+  updatePos();
+  updateStatus();
+  if (active === 0) {
+    //var scoreList = evaluateGeneration();
+    console.log(nodes);
+    makeNewGeneration();
+  };
+};
+
+function run() {
+  setup();
+  setInterval(function () {
+    updateVel();
+    updateAge();
+  }, 500);
+  d3.timer(function () {
+    update();
+    displayParticles();
+    return stopped;
+  });
+}
+
+function stop() {
+  clearInterval(interval);
+  nodes = [];
+  stopped = true;
+}
+
+module.exports = {
+  run: run,
+  stop: stop
+}
+
+},{"d3":21}],19:[function(require,module,exports){
+var d3 = require('d3');
+
+var w = 900;
+var h = 450;
+var center = [w/2,h/2];
+
+var n = 60;     // Number of points in circle.
+var r = 150;    // Radius of circle.
+var o = 50;     // Max random offset.
+
+var data = [];
+var time = 0;
+
+var interval;
+
+function addPoints() {
+  for (var i = 0; i < n; i++) {
+    data[i] = 0;
+  }
+};
+
+function updatePoints() {
+  data = data.map(function () {
+    return Math.random() * o - o/2;
+  })
+}
+
+function displayPoints() {
+  var points = svg.selectAll('.point').data(data)
+  points.enter().append('circle')
+    .attr('r', 2)
+    .attr('class', 'point');
+  points.transition().duration(400).delay(0).ease('linear')
+    .attr('cx', function (d,i) { return getX(i,d); })
+    .attr('cy', function (d,i) { return getY(i,d); })
+};
+
+function displayLines() {
+  var lines = svg.selectAll('.line').data(data)
+  lines.enter().append('line')
+    .attr('class', 'line');
+  lines.transition().duration(400).delay(0).ease('linear')
+    .attr('x1', function (d,i) { return getX(i,-50); })
+    .attr('y1', function (d,i) { return getY(i,-50); })
+    .attr('x2', function (d,i) { return getX(i,d); })
+    .attr('y2', function (d,i) { return getY(i,d); })
+};
+
+function getX(i,d) {
+  var phi = (i/n * Math.PI*2) + time/20;
+  return center[0] + (d + r) * (Math.cos(phi));
+};
+
+function getY(i,d) {
+  var phi = (i/n * Math.PI*2) + time/20;
+  return center[1] + (d + r) * (Math.sin(phi));
+};
+
+function setup() {
+  svg = d3.select('.fig7-1').append('svg').attr('width', w).attr('height', h);
+  addPoints();
+  displayPoints();
+  displayLines();
+};
+
+function draw() {
+  time++;
+  updatePoints();
+  displayLines();
+  displayPoints();
+}
+
+function run() {
+  setup();
+  interval = setInterval(function () {
+    draw();
+  }, 400);
+};
+
+function stop() {
+  clearInterval(interval);
+  data = [];
+  time = 0;
+}
+
+module.exports = {
+  run: run,
+  stop: stop
+};
+
+},{"d3":21}],20:[function(require,module,exports){
 var menu = {
   app: null,
   items: null,
@@ -1247,7 +1523,7 @@ var menu = {
 
 module.exports = menu;
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
