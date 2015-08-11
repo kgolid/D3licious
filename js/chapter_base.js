@@ -11,6 +11,7 @@ var fig5_2 = require('./figures/fig5-2.js');
 var fig5_3 = require('./figures/fig5-3.js');
 var fig6_1 = require('./figures/fig6-1.js');
 var fig6_2 = require('./figures/fig6-2.js');
+var fig6_3 = require('./figures/fig6-3.js');
 var fig7_1 = require('./figures/fig7-1.js');
 
 var art6 = require('./articles/art6.js');
@@ -120,6 +121,11 @@ module.exports = [
         id: 2,
         description: "Random movement from center",
         script: fig6_2
+      },
+      {
+        id: 3,
+        description: "Predefined movement",
+        script: fig6_3
       }
     ],
     articles: [
