@@ -5,6 +5,7 @@ var h = 450;
 
 var start = { x: w/2, y: h/2 }
 
+var generation_size = 20;
 var nodes = [];
 var log = [];
 var age = 0;
@@ -28,7 +29,7 @@ function addParticle() {
 }
 
 function addParticles() {
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < generation_size; i++) {
     addParticle();
   }
 }
