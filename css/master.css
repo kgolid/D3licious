@@ -87,15 +87,23 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
 .fig4-1 .axis text { stroke: #999; font-size: .6em; }
 
 /* Figure 5-1 */
-/* Figure 6-1 */
-.fig6-1 .particle {
-  stroke:none;
-}
-
-.fig6-1 .bar {
-  stroke:none;
-}
 .fig5-1 .particle { fill:none; stroke:steelblue; }
 .fig5-2 .particle { fill:steelblue; stroke:none; }
 .fig5-2 .particle { fill:steelblue: stroke:none; }
 
+/* Chapter 6 */
+.fig6-1 .particle { stroke:none; fill:#999; }
+.fig6-1 .start { stroke:red; fill:none; }
+
+.fig6-2 .particle { stroke:none; fill:#999; }
+.fig6-2 .start { stroke:red; fill:none; }
+.fig6-2 .bar { stroke:none; }
+
+.fig6-3 .particle.dead { fill:red; }
+.fig6-3 .particle.done { fill:green; }
+.fig6-3 .start { stroke:red; fill:none; }
+.fig6-3 .finish { stroke:green; fill:none; }
+
+/* Chapter 7 */
+.fig7-1 .point { fill:#999; stroke:none; }
+.fig7-1 .line { fill:none; stroke:#999; }
