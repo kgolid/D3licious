@@ -11,10 +11,10 @@ var log = [];
 var age = 0;
 var dim = 3;
 
-var svg;
+var svg, startButton, resetButton;
 
 var interval;
-var stopped;
+var stopped, running;
 
 function addParticle() {
   var ax = Math.random() - 0.5;
@@ -22,8 +22,7 @@ function addParticle() {
   var node = {
     pos: { x: start.x, y: start.y },
     vel: { x: 0, y: 0 },
-    acc: { x: ax, y: ay },
-    age: 0
+    acc: { x: ax, y: ay }
   }
   nodes.push(node);
 }
@@ -36,9 +35,23 @@ function addParticles() {
 
 function setup() {
   svg = d3.select('.fig6-2').append('svg').attr('width', w).attr('height', h);
+  startButton = d3.select('.fig6-2').append('input').attr('type','button').attr('value','Start')
+    .on('click', function () {
+      reset();
+      initiate();
+    });
+  resetButton = d3.select('.fig6-2').append('input').attr('type','button').attr('value','Reset')
+    .on('click', reset);
   displayStart();
-  addParticles();
-  stopped = false;
+  running = true;
+}
+
+function draw() {
+  if (running) {
+    update();
+  }
+  displayStats();
+  displayParticles();
 }
 
 function update() {
@@ -104,21 +117,33 @@ function displayStats() {
     .attr('fill', function (d,i) { return (i === 0)? '#f00':'#ddd' });
   bars.attr('width', function (d) { return d / 5; })
     .attr('y', function (d,i) { return i *7; });
+  bars.exit().remove();
+}
+
+function initiate() {
+  addParticles();
+  running = true;
 }
 
 function run() {
   setup();
+  initiate();
   d3.timer(function () {
-    update();
-    displayStats();
-    displayParticles();
+    draw();
     return stopped;
   });
 }
 
-function stop() {
+function reset() {
   clearInterval(interval);
   nodes = [];
+  age = 0;
+  log = [];
+  running = false;
+}
+
+function stop() {
+  reset();
   stopped = true;
 }
 
