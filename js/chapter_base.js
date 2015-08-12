@@ -109,7 +109,7 @@ module.exports = [
   },
   {
     id: 6,
-    name: "Genetic Algorithms - step by step",
+    name: "Genetic Algorithms - Step by Step",
     date: "2015-07-26",
     figures: [
       {
