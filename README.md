@@ -14,9 +14,13 @@ Me learning D3, svg, npm and git.  Link: http://golid.net/D3licious
   - **Figure 3.2:** As above, only from a random string of active pixels.
 - **Chapter 4:** Visualizing external data.
   - **Figure 4.1:** Interactive line chart showing population changes in Norway over the last ~30 years.
-- **Chapter 5:** Standstill Particles from mouse position.
-  - **Figure 5.1:** Expanding particles. 
+- **Chapter 5:** Particles from mouse position.
+  - **Figure 5.1:** Expanding particles.
   - **Figure 5.2:** Particles with different lifespans.
-  - **Figure 5.3:** Heatfield based on mouse position. (TODO)
-- **Chapter 6:** Moving Particles.
-  - **Figure 6.1:** Particles getting movement from mouse.
+  - **Figure 5.3:** Particles getting movement from mouse.
+- **Chapter 6:** Genetic Algoritms.
+  - **Figure 6.1:** Random particles moving from center.
+  - **Figure 6.2:** Tracking and storing the value of particle batches over time.
+  - **Figure 6.3:** Movement based on earlier generations.
+- **Chapter 7:** Points in Circle.
+  - **Figure 7.1:** Pulsing particles.
