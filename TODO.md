@@ -9,12 +9,12 @@ Upcoming figures
 - Cellular Automata - IN PROGRESS
   - ~~2 start configs~~
   - Add more controls ( what to reset when starting over )
-- Charts from csv datasets - IN PROGRESS
+- Charts from csv datasets
   - ~~make line charts~~
   - ~~Mark on hover (remove irrelevant data)~~
-  - Fancy transitions
+  - ~~Fancy transitions~~
   - Show all when not hovering
 - Color blend blob
 - Force Layouts
 - AI
-  - Generic algorithms
+  - Genetic algorithms - IN PROGRESS
