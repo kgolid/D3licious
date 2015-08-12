@@ -99,9 +99,11 @@ h2 { margin:40px 15px 5px 15px;  font-size:.8em; font-weight:300; letter-spacing
 .fig6-2 .start { stroke:red; fill:none; }
 .fig6-2 .bar { stroke:none; }
 
+.fig6-3 .particle.alive { fill:#999; }
 .fig6-3 .particle.dead { fill:red; }
 .fig6-3 .particle.done { fill:green; }
-.fig6-3 .start { stroke:red; fill:none; }
+.fig6-3 .start { stroke:#ddd; fill:none; }
+.fig6-3 .obstacle { stroke:#ddd; fill:none; }
 .fig6-3 .finish { stroke:green; fill:none; }
 
 /* Chapter 7 */
