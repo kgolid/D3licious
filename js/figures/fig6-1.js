@@ -8,7 +8,7 @@ var start = { x: w/2, y: h/2 }
 var nodes = [];
 var dim = 5;
 
-var svg;
+var svg, startButton, resetButton;
 
 var interval;
 var stopped;
@@ -27,11 +27,19 @@ function addParticle() {
 
 function setup() {
   svg = d3.select('.fig6-1').append('svg').attr('width', w).attr('height', h);
+  startButton = d3.select('.fig6-1').append('input').attr('type','button').attr('value','Start')
+    .on('click', function () {
+      reset();
+      makeParticleGenerator();
+    });
+  resetButton = d3.select('.fig6-1').append('input').attr('type','button').attr('value','Reset')
+    .on('click', reset);
   displayStart();
-  interval = setInterval( function () {
-    addParticle();
-  }, 200);
-  stopped = false;
+}
+
+function draw() {
+  update();
+  displayParticles();
 }
 
 function update() {
@@ -81,18 +89,28 @@ function displayParticles() {
   particles.exit().remove();
 }
 
+function makeParticleGenerator() {
+  interval = setInterval( function () {
+    addParticle();
+  }, 200);
+}
+
 function run() {
   setup();
-  d3.timer(function () {
-    update();
-    displayParticles();
+  makeParticleGenerator();
+  d3.timer(function (a) {
+    draw();
     return stopped;
   });
 }
 
-function stop() {
+function reset() {
   clearInterval(interval);
   nodes = [];
+}
+
+function stop() {
+  reset();
   stopped = true;
 }
 
